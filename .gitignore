@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / editor / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs and scratch
+*.log
+scratch/
+tmp/
+
+# Local-only settings
+*.local.*
+
+# Uncomment if training artifacts get large.
+# The codebooks in this repo are small (< 1 MB), so we keep them tracked.
+# *.pt
+# *.npy

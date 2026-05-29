@@ -1,0 +1,4 @@
+torch>=2.0
+numpy>=1.21
+scipy>=1.10        # eval scripts: scipy.io.savemat
+matplotlib>=3.5    # eval scripts: matplotlib.cm
