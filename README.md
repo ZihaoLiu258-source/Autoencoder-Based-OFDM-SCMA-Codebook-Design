@@ -1,6 +1,6 @@
 # Autoencoder-Based OFDM-SCMA Codebook Design
 
-End-to-end learned SCMA codebook for an OFDM uplink, optimized jointly with a differentiable Log-MPA detector under multipath fading, carrier frequency offset (CFO), and Wiener phase noise (PN).
+End-to-end learned SCMA codebook for an OFDM downlink, optimized jointly with a differentiable Log-MPA detector under multipath fading, carrier frequency offset (CFO), and Wiener phase noise (PN).
 
 ## Idea
 
