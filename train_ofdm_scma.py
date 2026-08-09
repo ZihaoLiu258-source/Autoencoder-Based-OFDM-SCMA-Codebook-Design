@@ -78,9 +78,12 @@ NIT_MPA_HIGH = 10
 USE_RANDOM_NIT = False
 NIT_SET = [6, 8, 10]
 
-LR = 1.0e-4
+LEARNING_RATE = 5.0e-4
+LR_SCHEDULER_STEP = 2500
+LR_SCHEDULER_GAMMA = 0.5
 PRINT_EVERY = 50
 CLIP_GRAD_NORM = 3.0
+HIGH_SNR_WEIGHT = 10.0
 
 # CFO fixed
 EPS_FIXED = 0.04
@@ -104,11 +107,6 @@ TAU_MED = 0.15
 
 # Global Es normalization
 GLOBAL_ES_TARGET = 1.0
-
-# --- Speed flags ---
-# Skip the baseline forward on the HIGH branch to save time.
-# Keep False during fine-tuning so the hinge term stays accurate at high SNR.
-SKIP_BASELINE_HIGH = False
 
 # Projection frequency: re-normalize Es every N steps.
 # Es drifts slowly; projecting every step wastes ~15% wall time for negligible gain.
@@ -147,9 +145,10 @@ CFO_VEC = cfo_phase_vec_fixed(EPS_FIXED)  # (1, NsymTD)
 
 
 # =========================
-# 4) Base codebook (J,K,M)
+# 4) Fixed Zhang baseline codebook (J,K,M)
 # =========================
-def build_base_codebook(device):
+def build_zhang_codebook(device):
+    """Capacity-based codebook of Zhang et al.; fixed hinge baseline and initialization."""
     CB = torch.zeros((K, M, V), dtype=DTYPEC, device=device)
 
     CB[:, :, 0] = torch.tensor([
@@ -424,7 +423,9 @@ def forward_one_codebook_fast(C_jkm, mask, x_bvq, h_rel, w_td, N0_awgn,
     W = scma_superpose_fullQ_vec(C_masked, x_bvq)  # (B,K,Q)
     S = W.reshape(Bsym, Nfft)  # (B,Nfft)
 
-    # --- Channel in frequency domain (CP condition valid) ---
+    # --- Common downlink channel seen by all superimposed SCMA layers ---
+    # With a valid CP, frequency-domain multiplication is equivalent to the
+    # time-domain channel convolution at the representative receiver.
     # h_pad: (B,Nfft)
     h_pad = F.pad(h_rel, (0, Nfft - Lh))  # pad last dim to Nfft
     Hf = torch.fft.fft(h_pad, n=Nfft, dim=-1)  # (B,Nfft)
@@ -435,10 +436,10 @@ def forward_one_codebook_fast(C_jkm, mask, x_bvq, h_rel, w_td, N0_awgn,
     # add CP
     y_td = torch.cat([y_td0[:, -Ncp:], y_td0], dim=-1)  # (B,NsymTD)
 
-    # --- CFO (fixed vector, precomputed) ---
+    # --- Receiver-side aggregate CFO, applied after the common channel ---
     y_td = y_td * cfo_vec  # (B,NsymTD)
 
-    # --- Phase noise (Wiener); shared between tr and base ---
+    # --- Receiver-side aggregate Wiener PN, applied after the common channel ---
     if pn_td is not None:
         y_td = y_td * pn_td  # (B,NsymTD)
 
@@ -514,9 +515,9 @@ def hinge_params(EbN0dB):
 # =========================
 # 15) SNR samplers
 # =========================
-LOW_SET = np.arange(0, 16)  # 0..15
-HIGH_SET = np.arange(22, 36)  # 27..40
-MID_SET = np.arange(16, 22)  # 16..26
+LOW_SET = np.arange(0, 16)  # 0..15 dB
+MID_SET = np.arange(16, 22)  # 16..21 dB
+HIGH_SET = np.arange(22, 36)  # 22..35 dB
 
 USE_MID_OCCASIONALLY = True
 P_MID_IN_LOW_PASS = 0.15
@@ -544,36 +545,22 @@ def sample_nit(default_nit):
 def main():
     torch.multiprocessing.freeze_support()
 
-    # Build the sparsity mask and factor graph from the analytical SCMA codebook.
-    math_base = build_base_codebook(DEVICE)  # (V,K,M)
-    mask = (math_base.abs() > 1e-12).to(torch.float32)
+    # Use one explicit, built-in baseline for both initialization and the hinge reference.
+    # This avoids an optional external file silently changing the training objective.
+    zhang_base = build_zhang_codebook(DEVICE)  # (V,K,M)
+    mask = (zhang_base.abs() > 1e-12).to(torch.float32)
     res_users, user_ress = build_factor_graph_from_mask(mask)
 
-    best_cb_path = "deka_codebook.pt"
+    print("[INFO] Using the built-in Zhang capacity-based codebook as initialization and hinge baseline.")
+    base_param = torch.nn.Parameter(zhang_base.clone())
+    _ = normalize_es_inplace(base_param, mask, Es_target=GLOBAL_ES_TARGET, Bmc=PROJ_BMC)
+    base = base_param.data.detach()
+    codebook = torch.nn.Parameter(base.clone())
 
-    # Fine-tune mode: start from a previously saved codebook if available.
-    if os.path.exists(best_cb_path):
-        print(f"[INFO] Loading {best_cb_path} as both initialization and hinge baseline.")
-        loaded_cb = torch.load(best_cb_path, map_location=DEVICE)
-
-        # Loaded codebook serves as the hinge baseline.
-        base_param = torch.nn.Parameter(loaded_cb.clone())
-        _ = normalize_es_inplace(base_param, mask, Es_target=GLOBAL_ES_TARGET, Bmc=PROJ_BMC)
-        base = base_param.data.detach()
-
-        # Trainable codebook starts at the baseline.
-        codebook = torch.nn.Parameter(base.clone())
-    else:
-        print(f"[INFO] {best_cb_path} not found; starting from the analytical SCMA codebook.")
-        base_param = torch.nn.Parameter(math_base.clone())
-        _ = normalize_es_inplace(base_param, mask, Es_target=GLOBAL_ES_TARGET, Bmc=PROJ_BMC)
-        base = base_param.data.detach()
-        codebook = torch.nn.Parameter(base.clone())
-
-    # Fine-tuning learning rate.
-    FINE_TUNE_LR = 5e-4
-    opt = torch.optim.Adam([codebook], lr=FINE_TUNE_LR)
-    sch = torch.optim.lr_scheduler.StepLR(opt, step_size=2500, gamma=0.5)
+    opt = torch.optim.Adam([codebook], lr=LEARNING_RATE)
+    sch = torch.optim.lr_scheduler.StepLR(
+        opt, step_size=LR_SCHEDULER_STEP, gamma=LR_SCHEDULER_GAMMA
+    )
 
     # initial projection
     _ = project_inplace(codebook, mask, Es_target=GLOBAL_ES_TARGET, Bmc=PROJ_BMC)
@@ -594,7 +581,7 @@ def main():
 
             pn_sigma = current_pn_sigma(step) if ENABLE_PN else 0.0
 
-            def one_pass(EbN0dB, x_bvq, h_rel, w_td, N0_awgn, q_idx, default_nit, do_baseline=True):
+            def one_pass(EbN0dB, x_bvq, h_rel, w_td, N0_awgn, q_idx, default_nit):
                 Nit = sample_nit(default_nit)
 
                 # Generate PN once and reuse for tr and base so the hinge sees identical conditions.
@@ -612,33 +599,27 @@ def main():
                 loss_tr = BCE_WEIGHT * bce_from_llr(LLR_tr, xsub_tr) + \
                           MARGIN_WEIGHT * margin_loss_from_llr(LLR_tr, xsub_tr, m0=MARGIN_M0, t=MARGIN_T)
 
-                if do_baseline:
-                    with torch.no_grad():
-                        LLR_b, xsub_b = forward_one_codebook_fast(
-                            base, mask, x_bvq, h_rel, w_td, N0_awgn,
-                            q_idx, Nit, epsv, cfo_vec,
-                            shared_pn_td,
-                            res_users, user_ress
-                        )
-                        loss_base = BCE_WEIGHT * bce_from_llr(LLR_b, xsub_b) + \
-                                    MARGIN_WEIGHT * margin_loss_from_llr(LLR_b, xsub_b, m0=MARGIN_M0, t=MARGIN_T)
-                else:
-                    # No baseline: collapse the hinge term to zero.
-                    loss_base = loss_tr.detach()
+                with torch.no_grad():
+                    LLR_b, xsub_b = forward_one_codebook_fast(
+                        base, mask, x_bvq, h_rel, w_td, N0_awgn,
+                        q_idx, Nit, epsv, cfo_vec,
+                        shared_pn_td,
+                        res_users, user_ress
+                    )
+                    loss_base = BCE_WEIGHT * bce_from_llr(LLR_b, xsub_b) + \
+                                MARGIN_WEIGHT * margin_loss_from_llr(LLR_b, xsub_b, m0=MARGIN_M0, t=MARGIN_T)
 
                 hm, lam = hinge_params(EbN0dB)
                 hinge = torch.relu(loss_tr - loss_base + hm)
                 loss_hinge = hinge * hinge
-                return loss_tr, loss_base, loss_hinge, lam, (LLR_tr, xsub_tr, (None if not do_baseline else LLR_b),
-                                                             (None if not do_baseline else xsub_b))
+                return loss_tr, loss_base, loss_hinge, lam, (LLR_tr, xsub_tr, LLR_b, xsub_b)
 
-            # LOW: always compute the baseline.
-            loss_tr_l, loss_b_l, loss_h_l, lam_l, pack_l = one_pass(EbN0_low, x_l, h_l, w_l, N0_l, q_l, NIT_MPA_LOW,
-                                                                    do_baseline=True)
-            # HIGH: optionally skip the baseline to save time. Keep False during fine-tuning.
-            do_base_high = (not SKIP_BASELINE_HIGH)
-            loss_tr_h, loss_b_h, loss_h_h, lam_h, pack_h = one_pass(EbN0_high, x_h, h_h, w_h, N0_h, q_h, NIT_MPA_HIGH,
-                                                                    do_baseline=do_base_high)
+            loss_tr_l, loss_b_l, loss_h_l, lam_l, pack_l = one_pass(
+                EbN0_low, x_l, h_l, w_l, N0_l, q_l, NIT_MPA_LOW
+            )
+            loss_tr_h, loss_b_h, loss_h_h, lam_h, pack_h = one_pass(
+                EbN0_high, x_h, h_h, w_h, N0_h, q_h, NIT_MPA_HIGH
+            )
 
             med_pen = torch.tensor(0.0, device=DEVICE)
             if USE_MED:
@@ -646,8 +627,9 @@ def main():
                 med_pen = soft_med_penalty(CB_kmv_tr, res_users, tau=TAU_MED)
 
             # Up-weight the high-SNR branch to drive the error floor down.
-            HIGH_WEIGHT = 10.0
-            total = (loss_tr_l + lam_l * loss_h_l) + HIGH_WEIGHT * (loss_tr_h + lam_h * loss_h_h) + LAMBDA_MED * med_pen
+            total = (loss_tr_l + lam_l * loss_h_l) + HIGH_SNR_WEIGHT * (
+                loss_tr_h + lam_h * loss_h_h
+            ) + LAMBDA_MED * med_pen
 
             total.backward()
             torch.nn.utils.clip_grad_norm_([codebook], CLIP_GRAD_NORM)

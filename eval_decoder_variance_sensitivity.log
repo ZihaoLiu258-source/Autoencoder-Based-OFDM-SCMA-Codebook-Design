@@ -1,0 +1,12 @@
+[RUN] started=2026-08-08T18:28:58.279616+08:00
+[RUN] command_script=E:\agent_workplace\论文修改\OFDM-SCMA\eval_decoder_variance_sensitivity.py
+[RUN] log_file=E:\agent_workplace\论文修改\OFDM-SCMA\eval_decoder_variance_sensitivity.log
+[INFO] Nd=5000/20000
+[INFO] Nd=10000/20000
+[INFO] Nd=15000/20000
+[INFO] Nd=20000/20000
+[RESULT] Proposed | gamma=0.5: errors=20728, bits=61440000, BER=3.374e-04 | gamma=1: errors=20712, bits=61440000, BER=3.371e-04 | gamma=2: errors=20702, bits=61440000, BER=3.369e-04
+[RESULT] PN-resilient | gamma=0.5: errors=20936, bits=61440000, BER=3.408e-04 | gamma=1: errors=20892, bits=61440000, BER=3.400e-04 | gamma=2: errors=20852, bits=61440000, BER=3.394e-04
+[INFO] Saved E:\agent_workplace\论文修改\OFDM-SCMA\decoder_variance_sensitivity.mat
+[INFO] Saved E:\agent_workplace\论文修改\OFDM-SCMA\decoder_variance_sensitivity.csv
+[RUN] finished=2026-08-08T18:29:49.857537+08:00
