@@ -25,7 +25,7 @@ labels = {
     'Proposed Codebook', ...
     'DE-Based (Deka et al. [6])', ...
     'Power-Imbalanced (Li et al. [7])', ...
-    'Capacitybased (Zhang et al. [8])', ...
+    'Capacity-Based (Zhang et al. [8])', ...
     'Deep Learning (Zheng et al. [11])', ...
     'PN-Resilient (Liu et al. [10])'
 };
@@ -56,13 +56,14 @@ for i = 1:nCB
     ub_sig_0   = ub_sig_0(:);
     ub_sig_24  = ub_sig_24(:);
 
-    % Dashed line: ideal PN (sigma = 0), not shown in the legend.
-    semilogy(eps_vec, ber_sig_0, '--', 'Color', [colors(i,:) 0.4], ...
-        'LineWidth', 1.2, 'HandleVisibility', 'off');
+    % Light dashed line with the matching marker: ideal PN (sigma = 0).
+    semilogy(eps_vec, ber_sig_0, '--', 'Color', [0.55, 0.55, 0.55], ...
+        'LineWidth', 1.2, 'Marker', markers{i}, 'MarkerIndices', 1:2:numel(eps_vec), ...
+        'MarkerSize', 5, 'MarkerFaceColor', 'none', 'HandleVisibility', 'off');
 
     % Solid line: severe PN (sigma = 2.4e-3).
     semilogy(eps_vec, ber_sig_24, ['-', markers{i}], 'Color', colors(i,:), ...
-        'LineWidth', 1.8, 'MarkerSize', 8, 'MarkerFaceColor', 'none', ...
+        'LineWidth', 2.0, 'MarkerSize', 9, 'MarkerFaceColor', 'none', ...
         'DisplayName', labels{i});
 
     % Downward triangles identify zero-error points plotted at the 95% upper bound.
@@ -83,9 +84,9 @@ grid on;
 set(gca, 'XMinorGrid', 'on', 'YMinorGrid', 'on', 'MinorGridLineStyle', ':');
 set(gca, 'GridLineStyle', '-', 'GridAlpha', 0.3);
 set(gca, 'TickDir', 'in');
-set(gca, 'FontName', 'Times New Roman', 'FontSize', 12);
-xlabel('Carrier Frequency Offset \epsilon', 'FontSize', 13);
-ylabel('Bit Error Rate (BER)', 'FontSize', 13);
+set(gca, 'FontName', 'Times New Roman', 'FontSize', 13);
+xlabel('Carrier Frequency Offset \epsilon', 'FontSize', 14);
+ylabel('Bit Error Rate (BER)', 'FontSize', 14);
 ylim([1e-6, 1e-1]);
 xlim([0, max(eps_vec)]);
 
