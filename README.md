@@ -1,6 +1,6 @@
 # Autoencoder-Based OFDM-SCMA Codebook Design
 
-End-to-end learned SCMA codebook for an OFDM downlink, optimized jointly with a differentiable Log-MPA detector under multipath fading, carrier frequency offset (CFO), and Wiener phase noise (PN).
+End-to-end learned SCMA codebook for an OFDM downlink, optimized with a differentiable Log-MPA detector under multipath fading, carrier frequency offset (CFO), and Wiener phase noise (PN).
 
 ## Idea
 
@@ -12,7 +12,11 @@ Treat the (transmitter codebook → channel → receiver detector) chain as a di
 - AWGN
 - A 10-iteration Log-MPA detector (logsumexp form, numerically stable end-to-end)
 
-A fixed reference codebook (`base`) acts as a quality floor: a squared-hinge term `(loss_tr − loss_base + m)_+²` forces the trainable codebook to beat the reference on identical channel / noise / PN draws.
+The simulator represents one downlink receiver. All `J = 6` SCMA layers are superimposed before transmission and therefore share that receiver's frequency-selective channel realization within an OFDM symbol. The channel changes independently between simulated OFDM symbols.
+
+The implemented time-domain order is `common downlink channel → aggregate CFO → aggregate Wiener PN → AWGN → CP removal/FFT`. Thus, CFO/PN are receiver-side aggregate impairments applied after channel convolution. The aggregate PN layer is a stated modeling approximation; the code does not model separate user oscillators or per-user uplink offsets.
+
+The capacity-based codebook of Zhang et al. is built directly into the training script and serves as both the initialization and the fixed quality reference. A squared-hinge term `(loss_tr − loss_base + m)_+²` encourages the trainable codebook to outperform this reference under identical messages, channels, AWGN, and PN realizations.
 
 ## System parameters
 
@@ -28,7 +32,7 @@ A fixed reference codebook (`base`) acts as a quality floor: a squared-hinge ter
 | PN | Wiener, `σ_step = 1e-3` rad / sample | |
 | MPA iterations | 10 | |
 
-`Es` is renormalized to `1.0` every 4 steps via a 64-sample Monte-Carlo estimate.
+During training, `Es` is projected to `1.0` every 4 steps via a 64-sample Monte-Carlo estimate. The final BER evaluators independently apply the exact analytic global-superposition normalization described below, eliminating normalization sampling error from codebook comparisons.
 
 ## Loss
 
@@ -40,15 +44,17 @@ L_total = (loss_tr_low  + λ_low  · hinge_low²)
 
 where `loss_tr = 0.3 · BCE + 0.8 · margin`, the margin term is `softplus((m₀ − signed_LLR)/t).mean()`, and `L_MED` is a soft-min over codeword-superposition distances at each resource (encourages well-separated effective constellations).
 
-EbN0 is sampled per step from a low band `[0, 15] dB` and a high band `[22, 35] dB` separately so the optimizer sees both regimes. The high-SNR branch is weighted 10× to push the error floor down.
+Each step samples a low/mid-SNR batch and a high-SNR batch. The first uses `[0, 15] dB` with probability 0.85 and `[16, 21] dB` with probability 0.15; the second uses `[22, 35] dB`. The high-SNR branch is weighted 10× to push the error floor down. Training uses Adam for 6000 steps with a batch size of 128 OFDM symbols per branch, an initial learning rate of `5e-4`, a factor-0.5 decay every 2500 steps, and gradient clipping at norm 3.
 
 ## What this model honestly does (and doesn't)
 
 - **Perfect CSI** is fed to the MPA. Channel-estimation noise is not modeled.
-- **CFO is fixed** at `ε = 0.04`. The codebook adapts to this one value; for deployment-grade robustness, randomize `ε` per step.
+- **CFO is fixed** at `ε = 0.04`. The codebook targets this one operating point; domain-randomized training is a separate future study.
 - **PN σ is fixed.** Same caveat.
 - **Quasi-static block fading** per OFDM symbol; no time correlation across symbols.
 - **Integer-sample tap delays.** No fractional delay or PDP leakage.
+- **Representative-receiver downlink.** All superimposed SCMA layers share one channel response at that receiver; the implementation is not a multi-user uplink channel model.
+- **Aggregate receiver-side CFO/PN.** Both rotations are applied after the common channel. Distributed transmitter/receiver PN is approximated by one post-channel Wiener process.
 
 ## Quick start
 
@@ -63,29 +69,57 @@ Outputs (saved to the working directory):
 - `cb1_kmv.pt`     — shape `(K, M, V)`, complex64, simulator format
 - The same two tensors as `.npy` for non-PyTorch consumers
 
-If a file named `deka_codebook.pt` exists in the working directory, the script enters fine-tune mode: it uses that codebook both as the initialization and as the hinge baseline. Otherwise it starts from the analytical SCMA codebook in `build_base_codebook()`.
+Training always starts from the built-in Zhang capacity-based codebook returned by `build_zhang_codebook()`, which is also used as the hinge baseline. No external baseline checkpoint is required, so a clean run uses the same reference as the manuscript.
 
 A snapshot of LOW / HIGH loss and hard BER is printed every 50 steps. `Ctrl-C` saves the current codebook safely before exit.
 
 ## Evaluation
 
-Three independent scripts sweep one impairment axis each and export a `.mat` file for MATLAB plotting. Each script benchmarks the trained codebook against five literature baselines (Deka, Li, Zhang, Zheng, LPCB-PN43).
+Evaluation is a two-stage pipeline: a Python script runs the Monte-Carlo BER sweep and exports a `.mat` file, then a matching MATLAB script renders the publication figure. Each sweep benchmarks the trained codebook against five literature baselines (Deka, Li, Zhang, Zheng, PN-Resilient/Liu).
 
-| Script | Sweep axis | Parameter | Output `.mat` |
-|---|---|---|---|
-| `eval_ber_vs_phasenoise.py` | PN `σ_step` ∈ [0, 3e-3] | CFO `ε` ∈ {0, 0.04} | `SCMA_CFO_Simulation_Results.mat` |
-| `eval_ber_vs_cfo.py` | CFO `ε` ∈ [0, 0.06] | PN `σ_step` ∈ {0, 2.4e-3} | `SCMA_SweepCFO_Simulation_Results.mat` |
-| `eval_ber_vs_ebn0.py` | `E_b/N_0` ∈ [10, 34] dB | CFO `ε = 0.04`, PN `σ = 5e-4` | `SCMA_EbN0_Simulation_Results.mat` |
+| Python sweep | MATLAB plot | Sweep axis | Other impairment | `.mat` file |
+|---|---|---|---|---|
+| `eval_ber_vs_phasenoise.py` | `plot_ber_vs_phasenoise.m` | PN `σ_step` ∈ [0, 3e-3] | CFO `ε` ∈ {0, 0.04} | `SCMA_CFO_Simulation_Results.mat` |
+| `eval_ber_vs_cfo.py` | `plot_ber_vs_cfo.m` | CFO `ε` ∈ [0, 0.06] | PN `σ_step` ∈ {0, 2.4e-3} | `SCMA_SweepCFO_Simulation_Results.mat` |
+| `eval_ber_vs_ebn0.py` | `plot_ber_vs_ebn0.m` | `E_b/N_0` ∈ [10, 34] dB | two conditions: ideal `(ε=0, σ=0)` and impaired `(ε=0.03, σ=1e-4)` | `SCMA_EbN0_Simulation_Results.mat` |
 
-The first two run at a fixed `E_b/N_0 = 30 dB` and a Monte-Carlo budget of `Nd_total = 100000` symbols with early-stop on error count. The Eb/N0 sweep uses `Nd_total = 20000` per point and tightens the budget above 30 dB.
+In every plot, the **solid** curve is the impaired condition and the **dashed** curve (same color, not in the legend) is the impairment-free reference, so the gap between the two shows each codebook's robustness directly.
+
+The CFO and PN sweeps run at `E_b/N_0 = 30 dB`, simulate at least 2,000 and at most 100,000 OFDM symbols per point, and stop early only after all six codebooks have accumulated at least 2,000 aggregate bit errors. The Eb/N0 sweep uses 20,000 symbols at regular points and up to 50,000 above 30 dB, with a 10,000-error target for every codebook at the high-SNR points. One OFDM symbol carries `J * (Nfft/K) * log2(M) = 3072` aggregate user bits, so the largest budgets are `3.072e8` and `1.536e8` bits per point, respectively.
+
+Evaluation uses seed 2025. Every OFDM symbol draws an independent eight-tap Rayleigh channel. Within each simulation chunk, all six codebooks receive identical messages, channel taps, AWGN, and PN paths; this common-random-number design reduces the variance of pairwise BER comparisons without changing any codebook's marginal channel distribution.
+
+Each revised evaluator exports the raw `error_count`, `total_bits`, `Nd_used`, `seed`, and `stopping_reason` together with the empirical BER. A zero-error run is stored as empirical `BER = 0`, never as an artificial floor. Its separate `BER_95_upper = 3 / total_bits` value and `BER_is_upper_bound` flag implement the conventional 95% rule-of-three bound. The MATLAB scripts plot those zero-error points at the bound using downward-triangle markers.
+
+Before each BER sweep, all codebooks are scaled using the same exact analytic criterion
+
+```text
+Es = (1/K) E_{m1,...,mJ}[ || sum_j c_j(mj) ||² ] = 1,
+R  = J log2(M) / K = 3 bits/resource element,
+N0 = 1 / (R · 10^(Eb/N0_dB/10)).
+```
+
+The expectation includes cross terms caused by nonzero per-user codebook means. It is evaluated analytically for independent equiprobable messages, rather than estimated with a finite Monte-Carlo batch. Time-domain AWGN uses variance `N0/Nfft`, which becomes variance `N0` per subcarrier after the unnormalized FFT. We preserve each baseline's original user-power allocation and equalize only total downlink superposition energy. Run `python analyze_codebook_energy.py` to reproduce the complete per-user and peak-codeword energy table in `codebook_energy_summary.csv`.
+
+The intentionally mismatched Log-MPA uses `N0_dec = N0` while the physical simulator still applies time-domain CFO and Wiener PN. The lightweight check `python eval_decoder_variance_sensitivity.py` repeats one representative point with `N0_dec = gamma*N0`, `gamma in {0.5, 1, 2}`, for the proposed and strongest PN-resilient baseline; it writes a raw-count `.mat`, `.csv`, and `.log`.
+
+Every evaluation also mirrors stdout and stderr to a complete log in the working directory: `eval_ber_vs_phasenoise.log`, `eval_ber_vs_cfo.log`, or `eval_ber_vs_ebn0.log`. The log records timestamps, script path, stopping reason, `Nd`, error count, total bits, empirical BER, and any zero-error upper bound for every simulated point.
 
 ```bash
+# 1) Run the sweeps (Python) -> writes the .mat files
 python eval_ber_vs_phasenoise.py
 python eval_ber_vs_cfo.py
 python eval_ber_vs_ebn0.py
+
+# Reproduce assumption/fairness checks used in the response letter
+python analyze_codebook_energy.py
+python eval_decoder_variance_sensitivity.py
+
+# 2) Render the figures (MATLAB) -> writes BER_vs_*.pdf / .eps
+#    run plot_ber_vs_phasenoise.m, plot_ber_vs_cfo.m, plot_ber_vs_ebn0.m
 ```
 
-> **Codebook path:** all three scripts load the trained codebook from `cb1_kmv.pt` (the file `train_ofdm_scma.py` writes). If that file is missing, the loader falls back to a random codebook and the resulting BER curves are meaningless — run training first, or `git pull` the example codebook included in this repo.
+> **Codebook path:** all three Python scripts require the released `cb1_kmv.pt` checkpoint (also written by `train_ofdm_scma.py`). If the file is missing or has the wrong shape, evaluation stops with an explicit error; it never substitutes a random codebook.
 
 ## Hardware
 
@@ -96,9 +130,15 @@ Developed on i5-13600KF + RTX 4070 (12 GB). At `BATCH_OFDMSYM = 128`, `Q_SUB = 2
 ```
 .
 ├── train_ofdm_scma.py            # main training script
-├── eval_ber_vs_phasenoise.py     # BER vs PN sigma sweep
-├── eval_ber_vs_cfo.py            # BER vs CFO sweep
-├── eval_ber_vs_ebn0.py           # BER vs Eb/N0 sweep
+├── eval_ber_vs_phasenoise.py     # BER vs PN sigma sweep  -> .mat
+├── eval_ber_vs_cfo.py            # BER vs CFO sweep        -> .mat
+├── eval_ber_vs_ebn0.py           # BER vs Eb/N0 sweep      -> .mat
+├── analyze_codebook_energy.py     # exact Es/user/peak energy audit -> .csv
+├── eval_decoder_variance_sensitivity.py # one-point N0_dec audit -> .mat/.csv/.log
+├── evaluation_utils.py            # exact normalization and BER/log helpers
+├── plot_ber_vs_phasenoise.m      # MATLAB: render PN sweep figure
+├── plot_ber_vs_cfo.m             # MATLAB: render CFO sweep figure
+├── plot_ber_vs_ebn0.m            # MATLAB: render Eb/N0 figure
 ├── codebook_e2e.pt / .npy        # trained codebook, (V, K, M)
 ├── cb1_kmv.pt / .npy             # same codebook in (K, M, V) layout
 ├── requirements.txt

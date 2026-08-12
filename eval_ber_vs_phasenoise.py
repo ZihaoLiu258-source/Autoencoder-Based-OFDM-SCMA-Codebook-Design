@@ -11,6 +11,12 @@ import torch
 import scipy.io as sio 
 import matplotlib.pyplot as plt 
 
+from evaluation_utils import (
+    ber_with_zero_error_bound,
+    normalize_codebook_exact_global_es,
+    run_with_log,
+)
+
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
@@ -74,7 +80,6 @@ PN_MODEL = "wiener"
 PN_RANDOM_INIT = False
 
 GLOBAL_ES_TARGET = 1.0
-MC_ES_B = 64
 HARDZERO_THR = 1e-6
 FG_THR = 1e-12
 
@@ -132,10 +137,15 @@ def build_cb_lpcb_pn43(device=DEVICE):
 
 def load_trained_cb1_kmv(path="cb1_kmv.pt", device=DEVICE):
     if not os.path.exists(path):
-        print(f"Warning: {path} not found. Using random CB.")
-        return torch.randn(K, M, V, dtype=DTYPEC, device=device)
+        raise FileNotFoundError(
+            f"Required trained codebook '{path}' was not found. "
+            "Run train_ofdm_scma.py or restore the released checkpoint before evaluation."
+        )
     cb = torch.load(path, map_location=device)
-    if not torch.is_tensor(cb): cb = torch.tensor(cb)
+    if not torch.is_tensor(cb):
+        cb = torch.tensor(cb)
+    if tuple(cb.shape) != (K, M, V):
+        raise ValueError(f"Loaded codebook shape {tuple(cb.shape)} != {(K, M, V)}")
     return cb.to(device).to(DTYPEC)
 
 def build_cb2_matlab_fullq(device=DEVICE):  # Deka
@@ -221,7 +231,7 @@ def build_cb_screenshot_new(device=DEVICE):  # Zheng
         [[0 + 0j] * 4, [0 + 0j] * 4, [0.9403 + 0.9400j, 0.0744 - 0.5773j, -0.9406 - 0.9399j, -0.0734 + 0.5820j],
          [0.2559 - 0.3754j, -0.9736 - 0.9737j, -0.2585 + 0.3752j, 0.9737 + 0.9738j]], dtype=DTYPEC, device=device)
     CB[:, :, 4] = torch.tensor(
-        [[1.1171 - 1.1170j, -0.5509 + 0.1312j, 0.5561 - 1.1405j, -1.1170 + 1.1171j], [0 + 0j] * 4, [0 + 0j] * 4,
+        [[1.1171 - 1.1170j, -0.5509 + 0.1312j, 0.5561 - 0.1405j, -1.1170 + 1.1171j], [0 + 0j] * 4, [0 + 0j] * 4,
          [-0.7533 - 0.3479j, -0.3812 + 0.5043j, 0.3697 - 0.5024j, 0.7535 + 0.3428j]], dtype=DTYPEC, device=device)
     CB[:, :, 5] = torch.tensor(
         [[0 + 0j] * 4, [-0.3115 + 1.0655j, -1.0652 + 0.5120j, 0.3088 - 1.0652j, 1.0652 - 0.5169j],
@@ -246,26 +256,9 @@ def build_factor_graph(CB, thr=1e-12):
     return res_users, user_ress
 
 @torch.no_grad()
-def mc_estimate_es_re(CB_kmv, B=64, device=DEVICE):
-    device = torch.device(device)
-    CB = CB_kmv.to(device)
-    x = torch.randint(0, M, (V, B * Q), device=device, dtype=torch.int64).view(V, B, Q)
-    W = torch.zeros((B, K, Q), dtype=DTYPEC, device=device)
-    for b in range(B):
-        Wb = torch.zeros((K, Q), dtype=DTYPEC, device=device)
-        for u in range(V):
-            idx = x[u, b, :].reshape(1, Q).expand(K, Q)
-            Wb += torch.gather(CB[:, :, u], dim=1, index=idx)
-        W[b] = Wb
-    S = torch.zeros((B, Nfft), dtype=DTYPEC, device=device)
-    for k_re in range(K): S[:, k_re * Q:(k_re + 1) * Q] = W[:, k_re, :]
-    return float((S.real * S.real + S.imag * S.imag).mean().item())
-
-@torch.no_grad()
-def normalize_cb_global_es(CB_kmv, Es_target=1.0, B=64, device=DEVICE):
-    Es = mc_estimate_es_re(CB_kmv, B=B, device=device)
-    g = math.sqrt(Es_target / (Es + 1e-12))
-    return (CB_kmv * g).to(DTYPEC), Es
+def normalize_cb_global_es(CB_kmv, Es_target=1.0):
+    normalized, source_es, _ = normalize_codebook_exact_global_es(CB_kmv, Es_target)
+    return normalized.to(DTYPEC), source_es
 
 def cfo_ici_var(epsv, N):
     if abs(epsv) < 1e-15: return 0.0
@@ -395,6 +388,8 @@ def simulate_chunk_shared(CB, epsv, x_vmq, h_rel, w_td, phi_td, device):
     Lconv = NsymTD + Lh - 1
     x_pad = torch.cat([x_td, torch.zeros((Nd_now, Lh - 1), dtype=DTYPEC, device=device)], dim=-1)
     h_pad = torch.cat([h_rel, torch.zeros((Nd_now, Lconv - Lh), dtype=DTYPEC, device=device)], dim=-1)
+    # One common downlink channel acts on the superposition observed by the
+    # representative receiver; aggregate CFO/PN are applied afterward.
     y_lin = \
         torch.fft.ifft(torch.fft.fft(x_pad, n=Lconv, dim=-1) * torch.fft.fft(h_pad, n=Lconv, dim=-1), n=Lconv, dim=-1)[
             :, :NsymTD]
@@ -442,22 +437,30 @@ def run():
     # Canonical legend labels.
     labels = [
         "Proposed AE-SCMA",
-        "DE-based (Deka et al. [7])",
-        "Li et al. [8]",
-        "Zhang et al. [9]",
+        "DE-based (Deka et al. [6])",
+        "Li et al. [7]",
+        "Zhang et al. [8]",
         "Deep Learning (Zheng et al. [11])",
-        "LPCB PN43"
+        "PN-Resilient (Liu et al. [10])"
     ]
 
     CB_all = []
     for cb in CBs_raw:
-        cbn, _ = normalize_cb_global_es(cb, Es_target=GLOBAL_ES_TARGET, B=MC_ES_B, device=device)
+        cbn, _ = normalize_cb_global_es(cb, Es_target=GLOBAL_ES_TARGET)
         CB_all.append(cbn)
 
     FG = [build_factor_graph(cb, thr=FG_THR) for cb in CB_all]
     nCB = len(CB_all)
 
-    BER_3D = np.zeros((len(eps_vec), len(sigma_vec), nCB), dtype=np.float64)
+    # Per-codebook statistics use layout (eps, sigma, codebook).
+    stats_shape = (len(eps_vec), len(sigma_vec), nCB)
+    BER_3D = np.zeros(stats_shape, dtype=np.float64)  # empirical errors / bits; may be zero
+    BER_95_upper = np.full(stats_shape, np.nan, dtype=np.float64)
+    BER_is_upper_bound = np.zeros(stats_shape, dtype=np.uint8)
+    error_count = np.zeros(stats_shape, dtype=np.int64)
+    total_bits = np.zeros(stats_shape, dtype=np.int64)
+    Nd_used = np.zeros((len(eps_vec), len(sigma_vec)), dtype=np.int64)
+    stopping_reason = np.empty((len(eps_vec), len(sigma_vec)), dtype=object)
 
     SNRdB = FIXED_EBN0_DB + 10.0 * math.log10(R_bits_per_RE)
     SNRlin = 10.0 ** (SNRdB / 10.0)
@@ -478,6 +481,7 @@ def run():
             bits_total = [torch.zeros((V,), dtype=torch.int64, device=device) for _ in range(nCB)]
 
             nd_done = 0
+            reached_target_errors = False
             while nd_done < Nd_total:
                 nd_now = min(Nd_chunk, Nd_total - nd_done)
                 x_vmq, h_rel, w_td, phi_td = gen_shared_chunk(nd_now, N0_awgn, device=device, sigma_val=sigma_val)
@@ -501,22 +505,52 @@ def run():
                         if int(err_total[icb].sum().item()) < TARGET_ERRS:
                             all_enough = False
                             break
-                    if all_enough: break
+                    if all_enough:
+                        reached_target_errors = True
+                        break
+
+            Nd_used[i_eps, i_sig] = nd_done
+            stopping_reason[i_eps, i_sig] = (
+                "target_errors_all_codebooks" if reached_target_errors else "maximum_Nd_reached"
+            )
 
             for icb in range(nCB):
-                total_err = float(err_total[icb].sum().item())
-                if total_err == 0:
-                    ber = 1e-9
-                else:
-                    ber = (err_total[icb].double() / bits_total[icb].double()).mean().item()
+                n_err = int(err_total[icb].sum().item())
+                n_bits = int(bits_total[icb].sum().item())
+                ber, upper_95, is_upper = ber_with_zero_error_bound(n_err, n_bits)
+                error_count[i_eps, i_sig, icb] = n_err
+                total_bits[i_eps, i_sig, icb] = n_bits
                 BER_3D[i_eps, i_sig, icb] = ber
+                BER_95_upper[i_eps, i_sig, icb] = upper_95
+                BER_is_upper_bound[i_eps, i_sig, icb] = int(is_upper)
 
-            print(f"[INFO] done: eps={epsv:.3f}, sigma={sigma_val:.1e}")
+            point_summary = []
+            for icb, label in enumerate(labels):
+                n_err = error_count[i_eps, i_sig, icb]
+                n_bits = total_bits[i_eps, i_sig, icb]
+                if BER_is_upper_bound[i_eps, i_sig, icb]:
+                    metric = f"BER=0, 95%UB={BER_95_upper[i_eps, i_sig, icb]:.3e}"
+                else:
+                    metric = f"BER={BER_3D[i_eps, i_sig, icb]:.3e}"
+                point_summary.append(f"{label}: errors={n_err}, bits={n_bits}, {metric}")
+            print(
+                f"[INFO] done: eps={epsv:.3f}, sigma={sigma_val:.1e}, "
+                f"Nd={nd_done}, stop={stopping_reason[i_eps, i_sig]} | "
+                + " | ".join(point_summary)
+            )
 
     mat_data = {
         'sigma_vec': sigma_vec,
         'eps_vec': eps_vec,
         'BER_3D': BER_3D,
+        'BER_95_upper': BER_95_upper,
+        'BER_is_upper_bound': BER_is_upper_bound,
+        'error_count': error_count,
+        'total_bits': total_bits,
+        'Nd_used': Nd_used,
+        'seed': np.int64(SEED),
+        'stopping_reason': stopping_reason,
+        'zero_error_bound_definition': '95% rule of three: 3 / total_bits',
         'labels': labels
     }
     mat_filename = "SCMA_CFO_Simulation_Results.mat"
@@ -524,4 +558,4 @@ def run():
     print(f"[INFO] Saved {mat_filename}")
 
 if __name__ == "__main__":
-    run()
+    run_with_log(run, "eval_ber_vs_phasenoise.log")
