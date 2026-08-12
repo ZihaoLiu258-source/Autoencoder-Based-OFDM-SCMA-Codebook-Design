@@ -1,0 +1,241 @@
+{
+  "codebooks": [
+    {
+      "label": "Full loss, seed 0",
+      "source_global_es": 1.001660704612732,
+      "normalized_global_es": 1.0,
+      "per_user_average_energy": [
+        0.6623097062110901,
+        0.6690794229507446,
+        0.6801754832267761,
+        0.6842663288116455,
+        0.6545253396034241,
+        0.6495949029922485
+      ],
+      "user_energy_max_min_ratio": 1.053373919129736,
+      "peak_codeword_energy": 0.7328129410743713,
+      "nonzero_magnitude_min": 0.20897294580936432,
+      "nonzero_magnitude_q25": 0.26598918437957764,
+      "nonzero_magnitude_median": 0.5050902366638184,
+      "nonzero_magnitude_q75": 0.7775243520736694,
+      "nonzero_magnitude_max": 0.8263500928878784,
+      "nonzero_magnitude_mean": 0.5156219005584717,
+      "nonzero_magnitude_cv": 0.5037355422973633,
+      "two_shell_centers": [
+        0.25745368003845215,
+        0.7737900614738464
+      ],
+      "two_shell_counts": [
+        24,
+        24
+      ],
+      "resource_minimum_superposition_distance_squared": [
+        0.00020419446809682995,
+        7.174102211138234e-05,
+        5.164087633602321e-05,
+        3.635140092228539e-05
+      ],
+      "resource_q05_nearest_neighbor_distance_squared": [
+        0.00032388066756539047,
+        0.00011061562690883875,
+        5.905625221203081e-05,
+        0.00032836542231962085
+      ],
+      "mean_resource_minimum_superposition_distance_squared": 9.098194186663022e-05,
+      "mean_resource_q05_nearest_neighbor_distance_squared": 0.00020547949225147022,
+      "implemented_soft_med_penalty_at_tau_0p15": 0.7945742607116699
+    },
+    {
+      "label": "No Soft-MED, seed 0",
+      "source_global_es": 1.0017694234848022,
+      "normalized_global_es": 1.0000001192092896,
+      "per_user_average_energy": [
+        0.6790410876274109,
+        0.6698408126831055,
+        0.6840291619300842,
+        0.6631549596786499,
+        0.654912531375885,
+        0.6489917039871216
+      ],
+      "user_energy_max_min_ratio": 1.0539875282345026,
+      "peak_codeword_energy": 0.7466440796852112,
+      "nonzero_magnitude_min": 0.20842117071151733,
+      "nonzero_magnitude_q25": 0.2673989236354828,
+      "nonzero_magnitude_median": 0.5050554275512695,
+      "nonzero_magnitude_q75": 0.7730339765548706,
+      "nonzero_magnitude_max": 0.8269451856613159,
+      "nonzero_magnitude_mean": 0.515214741230011,
+      "nonzero_magnitude_cv": 0.5057051777839661,
+      "two_shell_centers": [
+        0.2560698688030243,
+        0.7743596434593201
+      ],
+      "two_shell_counts": [
+        24,
+        24
+      ],
+      "resource_minimum_superposition_distance_squared": [
+        7.956374247442e-06,
+        1.9461582269286737e-05,
+        0.00042421798571012914,
+        0.00012361556582618505
+      ],
+      "resource_q05_nearest_neighbor_distance_squared": [
+        0.00013462947390507907,
+        5.120995410834439e-05,
+        0.0005692269769497216,
+        0.00017265399219468236
+      ],
+      "mean_resource_minimum_superposition_distance_squared": 0.00014381287701326073,
+      "mean_resource_q05_nearest_neighbor_distance_squared": 0.00023193009928945685,
+      "implemented_soft_med_penalty_at_tau_0p15": 0.7940762042999268
+    },
+    {
+      "label": "Full loss, seed 1",
+      "source_global_es": 1.0043655633926392,
+      "normalized_global_es": 0.9999999403953552,
+      "per_user_average_energy": [
+        0.6718159914016724,
+        0.6697469353675842,
+        0.6727883815765381,
+        0.675406277179718,
+        0.6587522625923157,
+        0.6513862013816833
+      ],
+      "user_energy_max_min_ratio": 1.0368753218092195,
+      "peak_codeword_energy": 0.7470212578773499,
+      "nonzero_magnitude_min": 0.19246754050254822,
+      "nonzero_magnitude_q25": 0.2692931592464447,
+      "nonzero_magnitude_median": 0.49655666947364807,
+      "nonzero_magnitude_q75": 0.7736131548881531,
+      "nonzero_magnitude_max": 0.8276727795600891,
+      "nonzero_magnitude_mean": 0.5155012607574463,
+      "nonzero_magnitude_cv": 0.504300594329834,
+      "two_shell_centers": [
+        0.2571673095226288,
+        0.7738351821899414
+      ],
+      "two_shell_counts": [
+        24,
+        24
+      ],
+      "resource_minimum_superposition_distance_squared": [
+        0.0003006950719282031,
+        0.00017440396186430007,
+        5.8798054851649795e-06,
+        6.785420555388555e-05
+      ],
+      "resource_q05_nearest_neighbor_distance_squared": [
+        0.0003927869547624141,
+        0.00036772468592971563,
+        0.00019686901941895485,
+        0.0003302389814052731
+      ],
+      "mean_resource_minimum_superposition_distance_squared": 0.00013720826120788843,
+      "mean_resource_q05_nearest_neighbor_distance_squared": 0.0003219049103790894,
+      "implemented_soft_med_penalty_at_tau_0p15": 0.7943240404129028
+    },
+    {
+      "label": "Full loss, seed 2",
+      "source_global_es": 0.9981184005737305,
+      "normalized_global_es": 0.9999998807907104,
+      "per_user_average_energy": [
+        0.67130446434021,
+        0.6763148307800293,
+        0.6709718704223633,
+        0.6675401926040649,
+        0.6541632413864136,
+        0.6596771478652954
+      ],
+      "user_energy_max_min_ratio": 1.033862479564991,
+      "peak_codeword_energy": 0.7329897284507751,
+      "nonzero_magnitude_min": 0.20335769653320312,
+      "nonzero_magnitude_q25": 0.2689861059188843,
+      "nonzero_magnitude_median": 0.5030208826065063,
+      "nonzero_magnitude_q75": 0.7710106372833252,
+      "nonzero_magnitude_max": 0.8179345726966858,
+      "nonzero_magnitude_mean": 0.5154756903648376,
+      "nonzero_magnitude_cv": 0.504447340965271,
+      "two_shell_centers": [
+        0.25686144828796387,
+        0.7740899920463562
+      ],
+      "two_shell_counts": [
+        24,
+        24
+      ],
+      "resource_minimum_superposition_distance_squared": [
+        0.0001136660430347547,
+        0.0002571227087173611,
+        0.00016000840696506202,
+        0.00013200592366047204
+      ],
+      "resource_q05_nearest_neighbor_distance_squared": [
+        0.0005579987773671746,
+        0.00035352451959624887,
+        0.0002873425546567887,
+        0.0007044415106065571
+      ],
+      "mean_resource_minimum_superposition_distance_squared": 0.00016570077059441246,
+      "mean_resource_q05_nearest_neighbor_distance_squared": 0.00047582684055669233,
+      "implemented_soft_med_penalty_at_tau_0p15": 0.7939951419830322
+    }
+  ],
+  "comparisons_to_original": [
+    {
+      "candidate": "Full loss, seed 0",
+      "reference": "Full loss, seed 0",
+      "global_phase_alignment_rad": 0.0,
+      "relative_frobenius_distance_after_global_phase_alignment": 0.0
+    },
+    {
+      "candidate": "No Soft-MED, seed 0",
+      "reference": "Full loss, seed 0",
+      "global_phase_alignment_rad": -0.0004162067489232868,
+      "relative_frobenius_distance_after_global_phase_alignment": 0.03934633359313011
+    },
+    {
+      "candidate": "Full loss, seed 1",
+      "reference": "Full loss, seed 0",
+      "global_phase_alignment_rad": 0.0011923296842724085,
+      "relative_frobenius_distance_after_global_phase_alignment": 0.030598198994994164
+    },
+    {
+      "candidate": "Full loss, seed 2",
+      "reference": "Full loss, seed 0",
+      "global_phase_alignment_rad": -0.0002746639074757695,
+      "relative_frobenius_distance_after_global_phase_alignment": 0.03508661687374115
+    }
+  ],
+  "full_loss_three_seed_stability": {
+    "user_energy_max_min_ratio": {
+      "mean": 1.0413705735013155,
+      "sample_std": 0.010503786664990975,
+      "min": 1.033862479564991,
+      "max": 1.053373919129736
+    },
+    "peak_codeword_energy": {
+      "mean": 0.7376079758008321,
+      "sample_std": 0.00815262062365112,
+      "min": 0.7328129410743713,
+      "max": 0.7470212578773499
+    },
+    "mean_resource_minimum_superposition_distance_squared": {
+      "mean": 0.00013129699122297703,
+      "sample_std": 3.770852922402039e-05,
+      "min": 9.098194186663022e-05,
+      "max": 0.00016570077059441246
+    },
+    "mean_resource_q05_nearest_neighbor_distance_squared": {
+      "mean": 0.000334403747729084,
+      "sample_std": 0.00013560637110859682,
+      "min": 0.00020547949225147022,
+      "max": 0.00047582684055669233
+    }
+  },
+  "notes": [
+    "All checkpoints are hard-zeroed and exactly normalized to global Es=1 before comparison.",
+    "Two-shell centers are deterministic descriptive clusters of active magnitudes, not model-selection claims.",
+    "The local superposition distances are noiseless resource-wise geometric diagnostics, not BER surrogates."
+  ]
+}

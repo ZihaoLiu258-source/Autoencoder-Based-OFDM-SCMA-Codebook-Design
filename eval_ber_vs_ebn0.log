@@ -1,6 +1,6 @@
 [RUN] started=2026-08-09T12:23:46.873210+08:00
-[RUN] command_script=E:\agent_workplace\论文修改\OFDM-SCMA\eval_ber_vs_ebn0.py
-[RUN] log_file=E:\agent_workplace\论文修改\OFDM-SCMA\eval_ber_vs_ebn0.log
+[RUN] command_script=eval_ber_vs_ebn0.py
+[RUN] log_file=eval_ber_vs_ebn0.log
 [INFO] device = cuda
 [Es align]
                CB1: Proposed | Es=1.001661 -> 1.0

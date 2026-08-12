@@ -6,7 +6,7 @@ from pathlib import Path
 import torch
 
 import eval_ber_vs_phasenoise as sim
-from evaluation_utils import codebook_energy_metrics, normalize_codebook_exact_global_es
+from evaluation_utils import codebook_energy_metrics, normalize_codebook_exact_global_es, portable_path
 
 
 OUTPUT_CSV = Path("codebook_energy_summary.csv")
@@ -64,7 +64,7 @@ def main():
             f"users=[{users}] | peak={row['peak_codeword_energy']:.4f} | "
             f"max/min={row['user_energy_max_min_ratio']:.3f}"
         )
-    print(f"[INFO] Saved {OUTPUT_CSV.resolve()}")
+    print(f"[INFO] Saved {portable_path(OUTPUT_CSV)}")
 
 
 if __name__ == "__main__":

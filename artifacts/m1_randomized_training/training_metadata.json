@@ -1,0 +1,52 @@
+{
+  "experiment": "M1 randomized-training ablation",
+  "status": "complete",
+  "seed": 0,
+  "steps": 6000,
+  "device": "cuda",
+  "impairment_sampling": {
+    "cfo_epsilon": {
+      "distribution": "uniform",
+      "minimum": 0.0,
+      "maximum": 0.06
+    },
+    "pn_sigma_step_rad": {
+      "distribution": "uniform",
+      "minimum": 0.0,
+      "maximum": 0.003
+    },
+    "sampling_scope": "independent low/high draw per optimization step; shared by trainable and hinge-reference codebooks within each branch"
+  },
+  "controlled_against_fixed_training": {
+    "initialization": "built-in Zhang codebook",
+    "batch_ofdm_symbols": 128,
+    "q_sub": 256,
+    "mpa_iterations_low": 10,
+    "mpa_iterations_high": 10,
+    "learning_rate": 0.0005,
+    "lr_scheduler_step": 2500,
+    "lr_scheduler_gamma": 0.5,
+    "high_snr_weight": 10.0,
+    "bce_weight": 0.3,
+    "margin_weight": 0.8,
+    "use_med": true,
+    "lambda_med": 0.01,
+    "global_es_target": 1.0
+  },
+  "output_separation": "all filenames are randomized_* under a dedicated artifact directory",
+  "elapsed_seconds": 2368.8643200000006,
+  "peak_cuda_memory_bytes": 3961426432,
+  "checkpoint_sha256": {
+    "randomized_codebook_e2e.pt": "7bdd4e3ca98ba1c788317608200e18d6f9c55d8a2bbdec52f614290aae39c002",
+    "randomized_cb_kmv.pt": "a4a6b2282212823c85a46b39fd02c5b690f1154a872e4956402e23b133f35d1d"
+  },
+  "outputs": [
+    "randomized_codebook_e2e.pt",
+    "randomized_cb_kmv.pt",
+    "randomized_codebook_e2e.npy",
+    "randomized_cb_kmv.npy",
+    "training_history.csv",
+    "train_randomized.log",
+    "training_metadata.json"
+  ]
+}

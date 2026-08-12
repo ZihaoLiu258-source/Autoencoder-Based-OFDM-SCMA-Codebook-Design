@@ -9,7 +9,7 @@ import scipy.io as sio
 import torch
 
 import eval_ber_vs_phasenoise as sim
-from evaluation_utils import normalize_codebook_exact_global_es, run_with_log
+from evaluation_utils import normalize_codebook_exact_global_es, portable_path, run_with_log
 
 
 SEED = 2026
@@ -117,8 +117,8 @@ def run():
             for igamma, gamma in enumerate(GAMMA_VALUES)
         )
         print(f"[RESULT] {label} | {values}")
-    print(f"[INFO] Saved {OUTPUT_MAT.resolve()}")
-    print(f"[INFO] Saved {OUTPUT_CSV.resolve()}")
+    print(f"[INFO] Saved {portable_path(OUTPUT_MAT)}")
+    print(f"[INFO] Saved {portable_path(OUTPUT_CSV)}")
 
 
 if __name__ == "__main__":

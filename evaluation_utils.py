@@ -86,6 +86,23 @@ def ber_with_zero_error_bound(error_count: int, total_bits: int) -> tuple[float,
     return empirical, upper_95, is_upper_bound
 
 
+def portable_path(path: str | Path) -> str:
+    """Return a repository-relative path suitable for metadata and logs.
+
+    Absolute workstation paths make released artifacts harder to compare and
+    can disclose local directory names. Paths inside the current working tree
+    are therefore recorded relative to it; external paths fall back to their
+    basename.
+    """
+    candidate = Path(path)
+    if not candidate.is_absolute():
+        return candidate.as_posix()
+    try:
+        return candidate.resolve().relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        return candidate.name
+
+
 class _Tee:
     def __init__(self, *streams):
         self.streams = streams
@@ -109,8 +126,8 @@ def run_with_log(run_fn, log_filename: str) -> None:
         with redirect_stdout(tee_out), redirect_stderr(tee_err):
             started = datetime.now().astimezone()
             print(f"[RUN] started={started.isoformat()}")
-            print(f"[RUN] command_script={Path(sys.argv[0]).resolve()}")
-            print(f"[RUN] log_file={log_path.resolve()}")
+            print(f"[RUN] command_script={portable_path(Path(sys.argv[0]))}")
+            print(f"[RUN] log_file={portable_path(log_path)}")
             try:
                 run_fn()
             except Exception:

@@ -1,6 +1,6 @@
 [RUN] started=2026-08-09T10:41:37.565103+08:00
-[RUN] command_script=E:\agent_workplace\论文修改\OFDM-SCMA\eval_ber_vs_cfo.py
-[RUN] log_file=E:\agent_workplace\论文修改\OFDM-SCMA\eval_ber_vs_cfo.log
+[RUN] command_script=eval_ber_vs_cfo.py
+[RUN] log_file=eval_ber_vs_cfo.log
 [INFO] device = cuda
 [INFO] Starting 2D scan at fixed Eb/N0 = 30 dB
 [INFO] done: eps=0.000, sigma=0.0e+00, Nd=100000, stop=maximum_Nd_reached | Proposed AE-SCMA: errors=503, bits=307200000, BER=1.637e-06 | DE-based (Deka et al. [7]): errors=888, bits=307200000, BER=2.891e-06 | Li et al. [8]: errors=723, bits=307200000, BER=2.354e-06 | Zhang et al. [9]: errors=625, bits=307200000, BER=2.035e-06 | Deep Learning (Zheng et al. [11]): errors=595, bits=307200000, BER=1.937e-06 | LPCB PN43: errors=55969, bits=307200000, BER=1.822e-04

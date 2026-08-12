@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software or its released artifacts, please cite the associated preprint."
+title: "Robust SCMA Codebook Design: A Hardware-Aware Autoencoder Approach"
+type: software
+authors:
+  - family-names: Liu
+    given-names: Zihao
+  - family-names: Liu
+    given-names: Zilong
+  - family-names: Musavian
+    given-names: Leila
+repository-code: "https://github.com/ZihaoLiu258-source/Autoencoder-Based-OFDM-SCMA-Codebook-Design"
+url: "https://arxiv.org/abs/2606.22603"
+license: MIT
+preferred-citation:
+  type: article
+  title: "Robust SCMA Codebook Design: A Hardware-Aware Autoencoder Approach"
+  authors:
+    - family-names: Liu
+      given-names: Zihao
+    - family-names: Liu
+      given-names: Zilong
+    - family-names: Musavian
+      given-names: Leila
+  year: 2026
+  publisher:
+    name: arXiv
+  doi: "10.48550/arXiv.2606.22603"

@@ -1,0 +1,100 @@
+{
+  "codebooks": [
+    {
+      "label": "Fixed-point training",
+      "source_global_es": 1.001660704612732,
+      "normalized_global_es": 1.0,
+      "per_user_average_energy": [
+        0.6623097062110901,
+        0.6690794229507446,
+        0.6801754832267761,
+        0.6842663288116455,
+        0.6545253396034241,
+        0.6495949029922485
+      ],
+      "user_energy_max_min_ratio": 1.053373919129736,
+      "peak_codeword_energy": 0.7328129410743713,
+      "nonzero_magnitude_min": 0.20897294580936432,
+      "nonzero_magnitude_q25": 0.26598918437957764,
+      "nonzero_magnitude_median": 0.5050902366638184,
+      "nonzero_magnitude_q75": 0.7775243520736694,
+      "nonzero_magnitude_max": 0.8263500928878784,
+      "nonzero_magnitude_mean": 0.5156219005584717,
+      "nonzero_magnitude_cv": 0.5037355422973633,
+      "two_shell_centers": [
+        0.25745368003845215,
+        0.7737900614738464
+      ],
+      "two_shell_counts": [
+        24,
+        24
+      ],
+      "resource_minimum_superposition_distance_squared": [
+        0.00020419446809682995,
+        7.174102211138234e-05,
+        5.164087633602321e-05,
+        3.635140092228539e-05
+      ],
+      "resource_q05_nearest_neighbor_distance_squared": [
+        0.00032388066756539047,
+        0.00011061562690883875,
+        5.905625221203081e-05,
+        0.00032836542231962085
+      ],
+      "mean_resource_minimum_superposition_distance_squared": 9.098194186663022e-05,
+      "mean_resource_q05_nearest_neighbor_distance_squared": 0.00020547949225147022
+    },
+    {
+      "label": "Randomized training",
+      "source_global_es": 1.0014185905456543,
+      "normalized_global_es": 1.0,
+      "per_user_average_energy": [
+        0.6768845319747925,
+        0.693972110748291,
+        0.6252305507659912,
+        0.6315561532974243,
+        0.6857156157493591,
+        0.6866487264633179
+      ],
+      "user_energy_max_min_ratio": 1.109945938978961,
+      "peak_codeword_energy": 0.7653564810752869,
+      "nonzero_magnitude_min": 0.18926554918289185,
+      "nonzero_magnitude_q25": 0.2765556275844574,
+      "nonzero_magnitude_median": 0.501636803150177,
+      "nonzero_magnitude_q75": 0.7474194169044495,
+      "nonzero_magnitude_max": 0.8519025444984436,
+      "nonzero_magnitude_mean": 0.5160978436470032,
+      "nonzero_magnitude_cv": 0.5014534592628479,
+      "two_shell_centers": [
+        0.26031720638275146,
+        0.7718785405158997
+      ],
+      "two_shell_counts": [
+        24,
+        24
+      ],
+      "resource_minimum_superposition_distance_squared": [
+        0.00035207162727601826,
+        0.00042188167572021484,
+        5.736792809329927e-05,
+        0.0002605546615086496
+      ],
+      "resource_q05_nearest_neighbor_distance_squared": [
+        0.0011216321727260947,
+        0.0009566029766574502,
+        0.00028161981026642025,
+        0.0003277938812971115
+      ],
+      "mean_resource_minimum_superposition_distance_squared": 0.0002729689731495455,
+      "mean_resource_q05_nearest_neighbor_distance_squared": 0.0006719122102367692
+    }
+  ],
+  "comparison": {
+    "support_masks_identical": true,
+    "fixed_checkpoint_sha256": "55c5336c41890f4359ca42d2021f0d1508328bc9024a23df6149fb7065336686",
+    "randomized_checkpoint_sha256": "a4a6b2282212823c85a46b39fd02c5b690f1154a872e4956402e23b133f35d1d",
+    "global_phase_alignment_rad": -0.0008621634333394468,
+    "relative_frobenius_distance_after_global_phase_alignment": 0.07028503715991974,
+    "interpretation_note": "Two-shell centers are a deterministic descriptive clustering of active coefficient magnitudes; they are not a statistical model-selection result."
+  }
+}
