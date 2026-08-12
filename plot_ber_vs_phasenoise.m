@@ -25,7 +25,7 @@ labels = {
     'Proposed Codebook', ...
     'DE-Based (Deka et al. [6])', ...
     'Power-Imbalanced (Li et al. [7])', ...
-    'Capacitybased (Zhang et al. [8])', ...
+    'Capacity-Based (Zhang et al. [8])', ...
     'Deep Learning (Zheng et al. [11])', ...
     'PN-Resilient (Liu et al. [10])'
 };
@@ -56,15 +56,15 @@ for i = 1:nCB
     ub_eps_0   = ub_eps_0(:);
     ub_eps_04  = ub_eps_04(:);
 
-    % Dashed line: ideal CFO (eps = 0), not shown in the legend.
-    semilogy(sigma_vec, ber_eps_0, '--', 'Color', [colors(i,:) 0.4], ...
-        'LineWidth', 1.2, 'HandleVisibility', 'off');
+    % Light dashed line with the matching marker: ideal CFO (eps = 0).
+    semilogy(sigma_vec, ber_eps_0, '--', 'Color', [0.55, 0.55, 0.55], ...
+        'LineWidth', 1.2, 'Marker', markers{i}, 'MarkerIndices', 1:2:numel(sigma_vec), ...
+        'MarkerSize', 5, 'MarkerFaceColor', 'none', 'HandleVisibility', 'off');
 
     % Solid line: severe CFO (eps = 0.04). PN-Resilient drawn slightly thicker.
-    lw = 1.5;
-    if i == 6, lw = 2.0; end
+    lw = 2.0;
     semilogy(sigma_vec, ber_eps_04, ['-', markers{i}], 'Color', colors(i,:), ...
-        'LineWidth', lw, 'MarkerSize', 8, 'MarkerFaceColor', 'none', ...
+        'LineWidth', lw, 'MarkerSize', 9, 'MarkerFaceColor', 'none', ...
         'DisplayName', labels{i});
 
     % Downward triangles identify zero-error points plotted at the 95% upper bound.
@@ -85,15 +85,13 @@ grid on;
 set(gca, 'XMinorGrid', 'on', 'YMinorGrid', 'on', 'MinorGridLineStyle', ':');
 set(gca, 'GridLineStyle', '-', 'GridAlpha', 0.3);
 set(gca, 'TickDir', 'in');
-set(gca, 'FontName', 'Times New Roman', 'FontSize', 12);
-xlabel('Phase Noise \sigma (rad)', 'FontSize', 13);
-ylabel('Bit Error Rate (BER)', 'FontSize', 13);
+set(gca, 'FontName', 'Times New Roman', 'FontSize', 13);
+xlabel('Phase Noise \sigma (rad)', 'FontSize', 14);
+ylabel('Bit Error Rate (BER)', 'FontSize', 14);
 ylim([1e-6, 1e-1]);
 xlim([0, max(sigma_vec)]);
 
-lgd = legend('Location', 'northwest');
-lgd.FontSize = 10;
-lgd.ItemTokenSize = [30, 18];
+% Fig. 2(a) carries the shared legend for all three panels.
 box on;
 set(gca, 'LineWidth', 1.2);
 
@@ -107,3 +105,4 @@ catch
     saveas(gcf, 'BER_vs_phasenoise.png');
     disp('exportgraphics unavailable; saved BER_vs_phasenoise.png instead.');
 end
+
