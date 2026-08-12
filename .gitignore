@@ -23,10 +23,12 @@ Thumbs.db
 
 # Logs and scratch
 *.log
-!artifacts/m1_randomized_training/*.log
-!artifacts/m3_no_med/*.log
-!artifacts/m4_seed_check/*.log
-!artifacts/m4_seed_check/*/*.log
+!artifacts/main/sweeps/*.log
+!artifacts/main/diagnostics/*.log
+!artifacts/phase1/m1_randomized_training/*.log
+!artifacts/phase1/m3_no_med/*.log
+!artifacts/phase1/m4_seed_check/*.log
+!artifacts/phase1/m4_seed_check/*/*.log
 scratch/
 tmp/
 *.tmp
@@ -43,6 +45,9 @@ slprj/
 BER_vs_*.pdf
 BER_vs_*.eps
 BER_vs_*.png
+!artifacts/main/figures/BER_vs_*.pdf
+!artifacts/main/figures/BER_vs_*.eps
+!artifacts/main/figures/BER_vs_*.png
 
 # Local-only settings
 *.local.*

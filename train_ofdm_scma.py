@@ -2,6 +2,7 @@
 
 import os
 import sys
+from pathlib import Path
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
@@ -9,6 +10,9 @@ import math
 import numpy as np
 import torch
 import torch.nn.functional as F
+
+REPO_ROOT = Path(__file__).resolve().parent
+OUTPUT_DIR = REPO_ROOT / "artifacts/main/checkpoints"
 
 # =========================
 # 0) Repro / device
@@ -672,11 +676,13 @@ def main():
         with torch.no_grad():
             C_final = (codebook * mask).detach().cpu()  # (V,K,M) == (J,K,M)
             CB1_sim = C_final.permute(1, 2, 0).contiguous()  # (K,M,V)
-        torch.save(C_final, "codebook_e2e.pt")
-        torch.save(CB1_sim, "cb1_kmv.pt")
-        np.save("codebook_e2e.npy", C_final.numpy())
-        np.save("cb1_kmv.npy", CB1_sim.numpy())
-        print("[INFO] Saved codebook_e2e.pt/.npy and cb1_kmv.pt/.npy.")
+        output_dir = Path(OUTPUT_DIR)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        torch.save(C_final, output_dir / "codebook_e2e.pt")
+        torch.save(CB1_sim, output_dir / "cb1_kmv.pt")
+        np.save(output_dir / "codebook_e2e.npy", C_final.numpy())
+        np.save(output_dir / "cb1_kmv.npy", CB1_sim.numpy())
+        print(f"[INFO] Saved checkpoints under {output_dir}.")
         print("[INFO] Training finished.")
 
 

@@ -1,0 +1,492 @@
+[RUN] started=2026-08-12T16:08:04.836896+08:00
+[RUN] command_script=experiments/phase1/train_fixed_point_control.py
+[RUN] log_file=artifacts/phase1/m4_seed_check/seed1/training.log
+[INFO] Phase-1 isolated fixed-point control
+[INFO] condition=full; seed=1; steps=6000
+[INFO] output_dir=artifacts/phase1/m4_seed_check/seed1
+[INFO] Original repository-root checkpoint will not be modified.
+[INFO] Using the built-in Zhang capacity-based codebook as initialization and hinge baseline.
+[TRAIN] step     0 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.003
+  LOW  EbN0 12: tr 9.444e-02 base 9.462e-02 hinge 3.578e-03*15.00 | hardBER tr 2.025e-02 base 2.031e-02
+  HIGH EbN0 30: tr 9.575e-02 base 9.555e-02 hinge 2.308e-04*2.00 | hardBER tr 6.510e-04 base 6.510e-04
+  MED 7.919e-01*1.0e-02 | total 1.118e+00
+[TRAIN] step    50 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  1: tr 5.699e-01 base 5.701e-01 hinge 3.577e-03*15.00 | hardBER tr 1.793e-01 base 1.791e-01
+  HIGH EbN0 27: tr 5.080e-02 base 5.134e-02 hinge 2.090e-04*2.00 | hardBER tr 6.968e-04 base 6.485e-04
+  MED 7.923e-01*1.0e-02 | total 1.144e+00
+[TRAIN] step   100 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.002
+  LOW  EbN0 21: tr 1.721e-02 base 2.022e-02 hinge 2.887e-04*2.00 | hardBER tr 1.005e-03 base 1.060e-03
+  HIGH EbN0 33: tr 1.607e-01 base 1.999e-01 hinge 0.000e+00*2.00 | hardBER tr 4.552e-04 base 4.425e-04
+  MED 7.918e-01*1.0e-02 | total 1.632e+00
+[TRAIN] step   150 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  3: tr 4.682e-01 base 4.696e-01 hinge 3.426e-03*15.00 | hardBER tr 1.426e-01 base 1.427e-01
+  HIGH EbN0 34: tr 1.815e-01 base 2.660e-01 hinge 0.000e+00*2.00 | hardBER tr 4.196e-04 base 5.035e-04
+  MED 7.920e-01*1.0e-02 | total 2.342e+00
+[TRAIN] step   200 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.999
+  LOW  EbN0 20: tr 1.675e-02 base 2.328e-02 hinge 1.815e-04*2.00 | hardBER tr 1.414e-03 base 1.582e-03
+  HIGH EbN0 26: tr 2.946e-02 base 5.261e-02 hinge 0.000e+00*2.00 | hardBER tr 6.002e-04 base 8.011e-04
+  MED 7.920e-01*1.0e-02 | total 3.197e-01
+[TRAIN] step   250 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  0: tr 6.332e-01 base 6.333e-01 hinge 3.595e-03*15.00 | hardBER tr 2.024e-01 base 2.025e-01
+  HIGH EbN0 25: tr 2.881e-02 base 4.320e-02 hinge 3.143e-05*2.00 | hardBER tr 7.960e-04 base 9.079e-04
+  MED 7.927e-01*1.0e-02 | total 9.838e-01
+[TRAIN] step   300 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.000
+  LOW  EbN0  5: tr 3.492e-01 base 3.521e-01 hinge 3.261e-03*15.00 | hardBER tr 1.026e-01 base 1.029e-01
+  HIGH EbN0 33: tr 2.107e-01 base 2.372e-01 hinge 0.000e+00*2.00 | hardBER tr 5.239e-04 base 6.002e-04
+  MED 7.924e-01*1.0e-02 | total 2.513e+00
+[TRAIN] step   350 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 11: tr 1.052e-01 base 1.141e-01 hinge 2.611e-03*15.00 | hardBER tr 2.515e-02 base 2.544e-02
+  HIGH EbN0 35: tr 2.131e-01 base 3.037e-01 hinge 0.000e+00*2.00 | hardBER tr 4.654e-04 base 5.417e-04
+  MED 7.924e-01*1.0e-02 | total 2.283e+00
+[TRAIN] step   400 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.997
+  LOW  EbN0  6: tr 3.204e-01 base 3.236e-01 hinge 3.223e-03*15.00 | hardBER tr 9.326e-02 base 9.351e-02
+  HIGH EbN0 22: tr 2.405e-02 base 4.057e-02 hinge 1.215e-05*2.00 | hardBER tr 9.740e-04 base 1.172e-03
+  MED 7.929e-01*1.0e-02 | total 6.174e-01
+[TRAIN] step   450 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 13: tr 6.960e-02 base 7.600e-02 hinge 2.873e-03*15.00 | hardBER tr 1.579e-02 base 1.582e-02
+  HIGH EbN0 23: tr 2.202e-02 base 2.670e-02 hinge 2.349e-04*2.00 | hardBER tr 1.010e-03 base 1.086e-03
+  MED 7.931e-01*1.0e-02 | total 3.455e-01
+[TRAIN] step   500 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.001
+  LOW  EbN0 10: tr 1.225e-01 base 1.294e-01 hinge 2.814e-03*15.00 | hardBER tr 3.055e-02 base 3.105e-02
+  HIGH EbN0 35: tr 2.291e-01 base 3.188e-01 hinge 0.000e+00*2.00 | hardBER tr 5.875e-04 base 6.002e-04
+  MED 7.925e-01*1.0e-02 | total 2.464e+00
+[TRAIN] step   550 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  6: tr 3.100e-01 base 3.136e-01 hinge 3.177e-03*15.00 | hardBER tr 8.909e-02 base 8.953e-02
+  HIGH EbN0 23: tr 1.583e-02 base 4.026e-02 hinge 0.000e+00*2.00 | hardBER tr 8.163e-04 base 1.094e-03
+  MED 7.921e-01*1.0e-02 | total 5.239e-01
+[TRAIN] step   600 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.003
+  LOW  EbN0  6: tr 3.097e-01 base 3.122e-01 hinge 3.306e-03*15.00 | hardBER tr 8.931e-02 base 8.965e-02
+  HIGH EbN0 32: tr 1.388e-01 base 2.356e-01 hinge 0.000e+00*2.00 | hardBER tr 5.468e-04 base 6.002e-04
+  MED 7.926e-01*1.0e-02 | total 1.756e+00
+[TRAIN] step   650 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  0: tr 6.349e-01 base 6.346e-01 hinge 3.637e-03*15.00 | hardBER tr 2.028e-01 base 2.024e-01
+  HIGH EbN0 28: tr 8.519e-02 base 1.401e-01 hinge 0.000e+00*2.00 | hardBER tr 6.866e-04 base 8.621e-04
+  MED 7.929e-01*1.0e-02 | total 1.549e+00
+[TRAIN] step   700 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.995
+  LOW  EbN0  9: tr 1.652e-01 base 1.698e-01 hinge 3.064e-03*15.00 | hardBER tr 4.271e-02 base 4.311e-02
+  HIGH EbN0 31: tr 1.053e-01 base 1.612e-01 hinge 0.000e+00*2.00 | hardBER tr 6.561e-04 base 7.528e-04
+  MED 7.929e-01*1.0e-02 | total 1.272e+00
+[TRAIN] step   750 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  5: tr 3.580e-01 base 3.599e-01 hinge 3.374e-03*15.00 | hardBER tr 1.059e-01 base 1.063e-01
+  HIGH EbN0 24: tr 2.019e-02 base 4.294e-02 hinge 0.000e+00*2.00 | hardBER tr 7.757e-04 base 9.638e-04
+  MED 7.926e-01*1.0e-02 | total 6.185e-01
+[TRAIN] step   800 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.001
+  LOW  EbN0  1: tr 5.649e-01 base 5.653e-01 hinge 3.547e-03*15.00 | hardBER tr 1.774e-01 base 1.776e-01
+  HIGH EbN0 34: tr 1.526e-01 base 2.568e-01 hinge 0.000e+00*2.00 | hardBER tr 7.095e-04 base 6.409e-04
+  MED 7.926e-01*1.0e-02 | total 2.152e+00
+[TRAIN] step   850 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  3: tr 4.558e-01 base 4.573e-01 hinge 3.426e-03*15.00 | hardBER tr 1.390e-01 base 1.391e-01
+  HIGH EbN0 22: tr 2.289e-02 base 3.842e-02 hinge 1.999e-05*2.00 | hardBER tr 1.264e-03 base 1.460e-03
+  MED 7.923e-01*1.0e-02 | total 7.445e-01
+[TRAIN] step   900 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.000
+  LOW  EbN0 21: tr 2.411e-02 base 3.776e-02 hinge 4.028e-05*2.00 | hardBER tr 1.528e-03 base 1.755e-03
+  HIGH EbN0 31: tr 1.006e-01 base 1.624e-01 hinge 0.000e+00*2.00 | hardBER tr 4.450e-04 base 4.171e-04
+  MED 7.925e-01*1.0e-02 | total 1.038e+00
+[TRAIN] step   950 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  0: tr 6.261e-01 base 6.266e-01 hinge 3.544e-03*15.00 | hardBER tr 1.992e-01 base 1.993e-01
+  HIGH EbN0 27: tr 3.703e-02 base 4.406e-02 hinge 6.366e-05*2.00 | hardBER tr 6.332e-04 base 6.816e-04
+  MED 7.926e-01*1.0e-02 | total 1.059e+00
+[TRAIN] step  1000 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.006
+  LOW  EbN0  7: tr 2.446e-01 base 2.483e-01 hinge 3.172e-03*15.00 | hardBER tr 6.892e-02 base 6.940e-02
+  HIGH EbN0 30: tr 5.494e-02 base 7.165e-02 hinge 0.000e+00*2.00 | hardBER tr 3.891e-04 base 5.010e-04
+  MED 7.920e-01*1.0e-02 | total 8.495e-01
+[TRAIN] step  1050 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 12: tr 8.033e-02 base 8.669e-02 hinge 2.877e-03*15.00 | hardBER tr 1.756e-02 base 1.767e-02
+  HIGH EbN0 31: tr 8.915e-02 base 8.786e-02 hinge 2.652e-04*2.00 | hardBER tr 4.781e-04 base 4.298e-04
+  MED 7.928e-01*1.0e-02 | total 1.028e+00
+[TRAIN] step  1100 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.005
+  LOW  EbN0  3: tr 4.771e-01 base 4.796e-01 hinge 3.307e-03*15.00 | hardBER tr 1.473e-01 base 1.479e-01
+  HIGH EbN0 25: tr 1.943e-02 base 2.597e-02 hinge 1.812e-04*2.00 | hardBER tr 7.019e-04 base 7.706e-04
+  MED 7.918e-01*1.0e-02 | total 7.326e-01
+[TRAIN] step  1150 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  1: tr 5.597e-01 base 5.607e-01 hinge 3.479e-03*15.00 | hardBER tr 1.749e-01 base 1.749e-01
+  HIGH EbN0 30: tr 5.898e-02 base 7.850e-02 hinge 0.000e+00*2.00 | hardBER tr 4.857e-04 base 6.866e-04
+  MED 7.919e-01*1.0e-02 | total 1.210e+00
+[TRAIN] step  1200 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.995
+  LOW  EbN0  5: tr 3.546e-01 base 3.558e-01 hinge 3.457e-03*15.00 | hardBER tr 1.045e-01 base 1.045e-01
+  HIGH EbN0 35: tr 2.769e-01 base 7.032e-01 hinge 0.000e+00*2.00 | hardBER tr 5.519e-04 base 7.172e-04
+  MED 7.927e-01*1.0e-02 | total 3.183e+00
+[TRAIN] step  1250 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 10: tr 1.167e-01 base 1.266e-01 hinge 2.511e-03*15.00 | hardBER tr 2.928e-02 base 2.984e-02
+  HIGH EbN0 26: tr 4.012e-02 base 1.122e-01 hinge 0.000e+00*2.00 | hardBER tr 7.477e-04 base 8.977e-04
+  MED 7.928e-01*1.0e-02 | total 5.634e-01
+[TRAIN] step  1300 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.997
+  LOW  EbN0  1: tr 5.762e-01 base 5.759e-01 hinge 3.639e-03*15.00 | hardBER tr 1.814e-01 base 1.810e-01
+  HIGH EbN0 34: tr 1.392e-01 base 2.439e-01 hinge 0.000e+00*2.00 | hardBER tr 5.620e-04 base 5.951e-04
+  MED 7.931e-01*1.0e-02 | total 2.031e+00
+[TRAIN] step  1350 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  5: tr 3.610e-01 base 3.624e-01 hinge 3.436e-03*15.00 | hardBER tr 1.067e-01 base 1.065e-01
+  HIGH EbN0 24: tr 4.170e-02 base 4.356e-02 hinge 3.291e-04*2.00 | hardBER tr 9.562e-04 base 1.033e-03
+  MED 7.928e-01*1.0e-02 | total 8.441e-01
+[TRAIN] step  1400 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.997
+  LOW  EbN0  4: tr 4.003e-01 base 4.028e-01 hinge 3.307e-03*15.00 | hardBER tr 1.200e-01 base 1.205e-01
+  HIGH EbN0 23: tr 1.896e-02 base 3.968e-02 hinge 0.000e+00*2.00 | hardBER tr 9.715e-04 base 1.088e-03
+  MED 7.924e-01*1.0e-02 | total 6.474e-01
+[TRAIN] step  1450 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 12: tr 8.099e-02 base 9.129e-02 hinge 2.470e-03*15.00 | hardBER tr 1.786e-02 base 1.852e-02
+  HIGH EbN0 28: tr 6.741e-02 base 1.499e-01 hinge 0.000e+00*2.00 | hardBER tr 7.375e-04 base 8.087e-04
+  MED 7.922e-01*1.0e-02 | total 8.001e-01
+[TRAIN] step  1500 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.003
+  LOW  EbN0 11: tr 9.826e-02 base 1.042e-01 hinge 2.921e-03*15.00 | hardBER tr 2.306e-02 base 2.362e-02
+  HIGH EbN0 29: tr 4.553e-02 base 1.063e-01 hinge 0.000e+00*2.00 | hardBER tr 4.603e-04 base 5.900e-04
+  MED 7.916e-01*1.0e-02 | total 6.052e-01
+[TRAIN] step  1550 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  0: tr 6.338e-01 base 6.347e-01 hinge 3.502e-03*15.00 | hardBER tr 2.034e-01 base 2.034e-01
+  HIGH EbN0 24: tr 2.414e-02 base 5.252e-02 hinge 0.000e+00*2.00 | hardBER tr 4.934e-04 base 7.604e-04
+  MED 7.918e-01*1.0e-02 | total 9.357e-01
+[TRAIN] step  1600 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.999
+  LOW  EbN0 13: tr 7.139e-02 base 8.486e-02 hinge 2.165e-03*15.00 | hardBER tr 1.490e-02 base 1.551e-02
+  HIGH EbN0 31: tr 9.729e-02 base 1.219e-01 hinge 0.000e+00*2.00 | hardBER tr 4.603e-04 base 5.747e-04
+  MED 7.925e-01*1.0e-02 | total 1.085e+00
+[TRAIN] step  1650 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  8: tr 2.013e-01 base 2.071e-01 hinge 2.929e-03*15.00 | hardBER tr 5.457e-02 base 5.529e-02
+  HIGH EbN0 31: tr 7.592e-02 base 1.049e-01 hinge 0.000e+00*2.00 | hardBER tr 4.196e-04 base 4.628e-04
+  MED 7.923e-01*1.0e-02 | total 1.012e+00
+[TRAIN] step  1700 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.998
+  LOW  EbN0 11: tr 1.077e-01 base 1.176e-01 hinge 2.511e-03*15.00 | hardBER tr 2.559e-02 base 2.659e-02
+  HIGH EbN0 26: tr 2.457e-02 base 2.080e-02 hinge 5.650e-04*2.00 | hardBER tr 4.807e-04 base 4.069e-04
+  MED 7.925e-01*1.0e-02 | total 4.103e-01
+[TRAIN] step  1750 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  8: tr 1.864e-01 base 1.931e-01 hinge 2.839e-03*15.00 | hardBER tr 4.909e-02 base 4.976e-02
+  HIGH EbN0 25: tr 2.657e-02 base 2.759e-02 hinge 3.605e-04*2.00 | hardBER tr 6.739e-04 base 6.994e-04
+  MED 7.923e-01*1.0e-02 | total 5.099e-01
+[TRAIN] step  1800 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.001
+  LOW  EbN0 13: tr 6.408e-02 base 7.378e-02 hinge 2.531e-03*15.00 | hardBER tr 1.418e-02 base 1.512e-02
+  HIGH EbN0 25: tr 4.165e-02 base 6.110e-02 hinge 2.982e-07*2.00 | hardBER tr 8.774e-04 base 1.015e-03
+  MED 7.924e-01*1.0e-02 | total 5.264e-01
+[TRAIN] step  1850 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 20: tr 2.537e-02 base 3.556e-02 hinge 9.632e-05*2.00 | hardBER tr 1.994e-03 base 2.240e-03
+  HIGH EbN0 33: tr 1.059e-01 base 1.797e-01 hinge 0.000e+00*2.00 | hardBER tr 4.654e-04 base 5.137e-04
+  MED 7.922e-01*1.0e-02 | total 1.092e+00
+[TRAIN] step  1900 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.002
+  LOW  EbN0  4: tr 4.009e-01 base 4.053e-01 hinge 3.097e-03*15.00 | hardBER tr 1.205e-01 base 1.212e-01
+  HIGH EbN0 24: tr 2.515e-02 base 4.380e-02 hinge 1.816e-06*2.00 | hardBER tr 7.044e-04 base 7.604e-04
+  MED 7.924e-01*1.0e-02 | total 7.068e-01
+[TRAIN] step  1950 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 13: tr 6.285e-02 base 7.423e-02 hinge 2.365e-03*15.00 | hardBER tr 1.343e-02 base 1.440e-02
+  HIGH EbN0 24: tr 2.737e-02 base 4.627e-02 hinge 1.209e-06*2.00 | hardBER tr 8.087e-04 base 9.282e-04
+  MED 7.925e-01*1.0e-02 | total 3.800e-01
+[TRAIN] step  2000 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.999
+  LOW  EbN0  8: tr 2.147e-01 base 2.236e-01 hinge 2.610e-03*15.00 | hardBER tr 5.849e-02 base 5.916e-02
+  HIGH EbN0 32: tr 1.071e-01 base 2.306e-01 hinge 0.000e+00*2.00 | hardBER tr 4.425e-04 base 4.654e-04
+  MED 7.923e-01*1.0e-02 | total 1.333e+00
+[TRAIN] step  2050 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 12: tr 8.529e-02 base 9.476e-02 hinge 2.554e-03*15.00 | hardBER tr 1.893e-02 base 1.978e-02
+  HIGH EbN0 24: tr 2.649e-02 base 3.127e-02 hinge 2.317e-04*2.00 | hardBER tr 8.850e-04 base 1.050e-03
+  MED 7.922e-01*1.0e-02 | total 4.010e-01
+[TRAIN] step  2100 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 0.997
+  LOW  EbN0  9: tr 1.755e-01 base 1.865e-01 hinge 2.395e-03*15.00 | hardBER tr 4.701e-02 base 4.847e-02
+  HIGH EbN0 22: tr 2.961e-02 base 3.163e-02 hinge 3.232e-04*2.00 | hardBER tr 1.116e-03 base 1.261e-03
+  MED 7.927e-01*1.0e-02 | total 5.219e-01
+[TRAIN] step  2150 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  5: tr 3.471e-01 base 3.548e-01 hinge 2.733e-03*15.00 | hardBER tr 1.023e-01 base 1.037e-01
+  HIGH EbN0 23: tr 2.089e-02 base 2.066e-02 hinge 4.092e-04*2.00 | hardBER tr 9.613e-04 base 9.791e-04
+  MED 7.919e-01*1.0e-02 | total 6.130e-01
+[TRAIN] step  2200 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.006
+  LOW  EbN0 15: tr 4.012e-02 base 5.223e-02 hinge 2.293e-03*15.00 | hardBER tr 6.348e-03 base 7.261e-03
+  HIGH EbN0 22: tr 1.825e-02 base 2.008e-02 hinge 3.304e-04*2.00 | hardBER tr 8.799e-04 base 9.995e-04
+  MED 7.916e-01*1.0e-02 | total 2.716e-01
+[TRAIN] step  2250 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  5: tr 3.617e-01 base 3.641e-01 hinge 3.312e-03*15.00 | hardBER tr 1.068e-01 base 1.069e-01
+  HIGH EbN0 29: tr 4.418e-02 base 6.440e-02 hinge 0.000e+00*2.00 | hardBER tr 4.400e-04 base 5.824e-04
+  MED 7.927e-01*1.0e-02 | total 8.610e-01
+[TRAIN] step  2300 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.000
+  LOW  EbN0 19: tr 1.931e-02 base 3.385e-02 hinge 2.979e-05*2.00 | hardBER tr 1.582e-03 base 2.052e-03
+  HIGH EbN0 32: tr 7.889e-02 base 1.139e-01 hinge 0.000e+00*2.00 | hardBER tr 2.823e-04 base 4.272e-04
+  MED 7.927e-01*1.0e-02 | total 8.162e-01
+[TRAIN] step  2350 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0  3: tr 4.679e-01 base 4.696e-01 hinge 3.406e-03*15.00 | hardBER tr 1.443e-01 base 1.442e-01
+  HIGH EbN0 22: tr 2.029e-02 base 4.491e-02 hinge 0.000e+00*2.00 | hardBER tr 1.088e-03 base 1.503e-03
+  MED 7.923e-01*1.0e-02 | total 7.298e-01
+[TRAIN] step  2400 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC 1.005
+  LOW  EbN0 10: tr 1.191e-01 base 1.338e-01 hinge 2.054e-03*15.00 | hardBER tr 2.944e-02 base 3.155e-02
+  HIGH EbN0 35: tr 2.010e-01 base 3.159e-01 hinge 0.000e+00*2.00 | hardBER tr 3.332e-04 base 3.637e-04
+  MED 7.924e-01*1.0e-02 | total 2.168e+00
+[TRAIN] step  2450 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 5.0e-04 | EsMC nan
+  LOW  EbN0 11: tr 1.036e-01 base 1.161e-01 hinge 2.251e-03*15.00 | hardBER tr 2.533e-02 base 2.714e-02
+  HIGH EbN0 24: tr 2.092e-02 base 2.803e-02 hinge 1.661e-04*2.00 | hardBER tr 6.663e-04 base 8.367e-04
+  MED 7.923e-01*1.0e-02 | total 3.578e-01
+[TRAIN] step  2500 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.006
+  LOW  EbN0  5: tr 3.515e-01 base 3.603e-01 hinge 2.630e-03*15.00 | hardBER tr 1.040e-01 base 1.062e-01
+  HIGH EbN0 35: tr 2.170e-01 base 4.245e-01 hinge 0.000e+00*2.00 | hardBER tr 3.332e-04 base 5.544e-04
+  MED 7.918e-01*1.0e-02 | total 2.569e+00
+[TRAIN] step  2550 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 19: tr 1.731e-02 base 3.483e-02 hinge 6.163e-06*2.00 | hardBER tr 1.971e-03 base 2.480e-03
+  HIGH EbN0 31: tr 1.006e-01 base 1.465e-01 hinge 0.000e+00*2.00 | hardBER tr 4.400e-04 base 6.154e-04
+  MED 7.929e-01*1.0e-02 | total 1.031e+00
+[TRAIN] step  2600 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.004
+  LOW  EbN0  7: tr 2.188e-01 base 2.314e-01 hinge 2.245e-03*15.00 | hardBER tr 6.020e-02 base 6.189e-02
+  HIGH EbN0 35: tr 2.157e-01 base 3.899e-01 hinge 0.000e+00*2.00 | hardBER tr 4.018e-04 base 5.620e-04
+  MED 7.926e-01*1.0e-02 | total 2.418e+00
+[TRAIN] step  2650 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 11: tr 1.086e-01 base 1.186e-01 hinge 2.501e-03*15.00 | hardBER tr 2.538e-02 base 2.738e-02
+  HIGH EbN0 27: tr 2.924e-02 base 3.104e-02 hinge 1.741e-04*2.00 | hardBER tr 4.628e-04 base 5.900e-04
+  MED 7.922e-01*1.0e-02 | total 4.500e-01
+[TRAIN] step  2700 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.001
+  LOW  EbN0 21: tr 1.461e-02 base 2.638e-02 hinge 6.768e-05*2.00 | hardBER tr 1.132e-03 base 1.523e-03
+  HIGH EbN0 27: tr 4.397e-02 base 3.822e-02 hinge 4.306e-04*2.00 | hardBER tr 5.595e-04 base 5.442e-04
+  MED 7.928e-01*1.0e-02 | total 4.709e-01
+[TRAIN] step  2750 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 13: tr 5.827e-02 base 7.560e-02 hinge 1.820e-03*15.00 | hardBER tr 1.224e-02 base 1.368e-02
+  HIGH EbN0 27: tr 5.348e-02 base 1.099e-01 hinge 0.000e+00*2.00 | hardBER tr 6.612e-04 base 1.106e-03
+  MED 7.931e-01*1.0e-02 | total 6.283e-01
+[TRAIN] step  2800 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.997
+  LOW  EbN0 20: tr 1.461e-02 base 2.629e-02 hinge 6.917e-05*2.00 | hardBER tr 1.607e-03 base 2.037e-03
+  HIGH EbN0 22: tr 1.657e-02 base 3.389e-02 hinge 7.165e-06*2.00 | hardBER tr 7.782e-04 base 1.157e-03
+  MED 7.928e-01*1.0e-02 | total 1.885e-01
+[TRAIN] step  2850 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 13: tr 6.039e-02 base 7.244e-02 hinge 2.300e-03*15.00 | hardBER tr 1.267e-02 base 1.379e-02
+  HIGH EbN0 33: tr 1.187e-01 base 2.377e-01 hinge 0.000e+00*2.00 | hardBER tr 3.637e-04 base 4.883e-04
+  MED 7.923e-01*1.0e-02 | total 1.290e+00
+[TRAIN] step  2900 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.002
+  LOW  EbN0 15: tr 3.207e-02 base 4.718e-02 hinge 2.016e-03*15.00 | hardBER tr 5.699e-03 base 6.775e-03
+  HIGH EbN0 32: tr 5.261e-02 base 1.693e-01 hinge 0.000e+00*2.00 | hardBER tr 2.950e-04 base 4.476e-04
+  MED 7.927e-01*1.0e-02 | total 5.963e-01
+[TRAIN] step  2950 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 12: tr 8.436e-02 base 9.645e-02 hinge 2.295e-03*15.00 | hardBER tr 1.903e-02 base 2.053e-02
+  HIGH EbN0 33: tr 1.242e-01 base 1.262e-01 hinge 1.693e-04*2.00 | hardBER tr 2.848e-04 base 3.586e-04
+  MED 7.928e-01*1.0e-02 | total 1.372e+00
+[TRAIN] step  3000 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.997
+  LOW  EbN0  0: tr 6.313e-01 base 6.310e-01 hinge 3.643e-03*15.00 | hardBER tr 2.019e-01 base 2.011e-01
+  HIGH EbN0 26: tr 2.816e-02 base 6.518e-02 hinge 0.000e+00*2.00 | hardBER tr 5.442e-04 base 8.418e-04
+  MED 7.929e-01*1.0e-02 | total 9.755e-01
+[TRAIN] step  3050 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  5: tr 3.593e-01 base 3.632e-01 hinge 3.139e-03*15.00 | hardBER tr 1.056e-01 base 1.069e-01
+  HIGH EbN0 26: tr 2.521e-02 base 5.671e-02 hinge 0.000e+00*2.00 | hardBER tr 4.908e-04 base 6.892e-04
+  MED 7.934e-01*1.0e-02 | total 6.664e-01
+[TRAIN] step  3100 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.998
+  LOW  EbN0 14: tr 5.104e-02 base 5.975e-02 hinge 2.631e-03*15.00 | hardBER tr 9.674e-03 base 1.050e-02
+  HIGH EbN0 35: tr 1.158e-01 base 4.698e-01 hinge 0.000e+00*2.00 | hardBER tr 2.645e-04 base 4.272e-04
+  MED 7.935e-01*1.0e-02 | total 1.256e+00
+[TRAIN] step  3150 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  5: tr 3.728e-01 base 3.750e-01 hinge 3.340e-03*15.00 | hardBER tr 1.104e-01 base 1.108e-01
+  HIGH EbN0 23: tr 1.638e-02 base 4.523e-02 hinge 0.000e+00*2.00 | hardBER tr 5.773e-04 base 9.918e-04
+  MED 7.937e-01*1.0e-02 | total 5.946e-01
+[TRAIN] step  3200 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.003
+  LOW  EbN0 10: tr 1.344e-01 base 1.430e-01 hinge 2.642e-03*15.00 | hardBER tr 3.374e-02 base 3.449e-02
+  HIGH EbN0 33: tr 2.638e-01 base 3.696e-01 hinge 0.000e+00*2.00 | hardBER tr 5.824e-04 base 9.664e-04
+  MED 7.927e-01*1.0e-02 | total 2.820e+00
+[TRAIN] step  3250 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  2: tr 5.479e-01 base 5.470e-01 hinge 3.710e-03*15.00 | hardBER tr 1.703e-01 base 1.708e-01
+  HIGH EbN0 34: tr 2.118e-01 base 2.893e-01 hinge 0.000e+00*2.00 | hardBER tr 5.417e-04 base 6.968e-04
+  MED 7.933e-01*1.0e-02 | total 2.729e+00
+[TRAIN] step  3300 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.004
+  LOW  EbN0 11: tr 9.834e-02 base 1.116e-01 hinge 2.186e-03*15.00 | hardBER tr 2.333e-02 base 2.519e-02
+  HIGH EbN0 23: tr 1.314e-02 base 2.967e-02 hinge 1.203e-05*2.00 | hardBER tr 7.655e-04 base 1.027e-03
+  MED 7.928e-01*1.0e-02 | total 2.707e-01
+[TRAIN] step  3350 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  1: tr 5.755e-01 base 5.739e-01 hinge 3.793e-03*15.00 | hardBER tr 1.813e-01 base 1.807e-01
+  HIGH EbN0 34: tr 1.175e-01 base 3.421e-01 hinge 0.000e+00*2.00 | hardBER tr 3.357e-04 base 5.875e-04
+  MED 7.935e-01*1.0e-02 | total 1.815e+00
+[TRAIN] step  3400 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.998
+  LOW  EbN0  5: tr 3.633e-01 base 3.635e-01 hinge 3.583e-03*15.00 | hardBER tr 1.070e-01 base 1.075e-01
+  HIGH EbN0 32: tr 5.853e-02 base 1.618e-01 hinge 0.000e+00*2.00 | hardBER tr 2.975e-04 base 4.705e-04
+  MED 7.933e-01*1.0e-02 | total 1.010e+00
+[TRAIN] step  3450 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  1: tr 5.680e-01 base 5.669e-01 hinge 3.731e-03*15.00 | hardBER tr 1.780e-01 base 1.776e-01
+  HIGH EbN0 34: tr 1.864e-01 base 2.098e-01 hinge 0.000e+00*2.00 | hardBER tr 3.408e-04 base 4.527e-04
+  MED 7.936e-01*1.0e-02 | total 2.496e+00
+[TRAIN] step  3500 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.002
+  LOW  EbN0  2: tr 5.315e-01 base 5.294e-01 hinge 3.850e-03*15.00 | hardBER tr 1.657e-01 base 1.651e-01
+  HIGH EbN0 34: tr 1.118e-01 base 1.631e-01 hinge 0.000e+00*2.00 | hardBER tr 3.586e-04 base 5.849e-04
+  MED 7.932e-01*1.0e-02 | total 1.715e+00
+[TRAIN] step  3550 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 15: tr 3.974e-02 base 5.682e-02 hinge 1.842e-03*15.00 | hardBER tr 7.250e-03 base 8.237e-03
+  HIGH EbN0 24: tr 3.337e-02 base 4.333e-02 hinge 1.007e-04*2.00 | hardBER tr 8.265e-04 base 1.025e-03
+  MED 7.929e-01*1.0e-02 | total 4.110e-01
+[TRAIN] step  3600 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.004
+  LOW  EbN0  8: tr 2.004e-01 base 2.070e-01 hinge 2.856e-03*15.00 | hardBER tr 5.416e-02 base 5.568e-02
+  HIGH EbN0 22: tr 1.965e-02 base 3.288e-02 hinge 4.578e-05*2.00 | hardBER tr 1.022e-03 base 1.442e-03
+  MED 7.931e-01*1.0e-02 | total 4.485e-01
+[TRAIN] step  3650 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  6: tr 2.996e-01 base 3.023e-01 hinge 3.274e-03*15.00 | hardBER tr 8.526e-02 base 8.576e-02
+  HIGH EbN0 32: tr 1.091e-01 base 2.258e-01 hinge 0.000e+00*2.00 | hardBER tr 3.866e-04 base 5.442e-04
+  MED 7.933e-01*1.0e-02 | total 1.448e+00
+[TRAIN] step  3700 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.998
+  LOW  EbN0  6: tr 2.932e-01 base 2.965e-01 hinge 3.206e-03*15.00 | hardBER tr 8.444e-02 base 8.515e-02
+  HIGH EbN0 32: tr 8.387e-02 base 2.597e-01 hinge 0.000e+00*2.00 | hardBER tr 4.222e-04 base 6.307e-04
+  MED 7.942e-01*1.0e-02 | total 1.188e+00
+[TRAIN] step  3750 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  1: tr 5.956e-01 base 5.940e-01 hinge 3.803e-03*15.00 | hardBER tr 1.883e-01 base 1.871e-01
+  HIGH EbN0 22: tr 1.583e-02 base 3.434e-02 hinge 2.210e-06*2.00 | hardBER tr 9.232e-04 base 1.434e-03
+  MED 7.940e-01*1.0e-02 | total 8.190e-01
+[TRAIN] step  3800 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.995
+  LOW  EbN0 14: tr 4.775e-02 base 5.285e-02 hinge 3.014e-03*15.00 | hardBER tr 9.031e-03 base 9.890e-03
+  HIGH EbN0 30: tr 5.995e-02 base 1.166e-01 hinge 0.000e+00*2.00 | hardBER tr 3.993e-04 base 5.671e-04
+  MED 7.940e-01*1.0e-02 | total 7.004e-01
+[TRAIN] step  3850 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  4: tr 4.208e-01 base 4.228e-01 hinge 3.363e-03*15.00 | hardBER tr 1.269e-01 base 1.273e-01
+  HIGH EbN0 30: tr 5.690e-02 base 1.080e-01 hinge 0.000e+00*2.00 | hardBER tr 4.044e-04 base 7.095e-04
+  MED 7.934e-01*1.0e-02 | total 1.048e+00
+[TRAIN] step  3900 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.007
+  LOW  EbN0  6: tr 2.947e-01 base 2.996e-01 hinge 3.037e-03*15.00 | hardBER tr 8.431e-02 base 8.431e-02
+  HIGH EbN0 22: tr 1.723e-02 base 4.274e-02 hinge 0.000e+00*2.00 | hardBER tr 8.087e-04 base 1.305e-03
+  MED 7.929e-01*1.0e-02 | total 5.205e-01
+[TRAIN] step  3950 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  8: tr 2.088e-01 base 2.140e-01 hinge 3.001e-03*15.00 | hardBER tr 5.611e-02 base 5.718e-02
+  HIGH EbN0 35: tr 1.993e-01 base 3.299e-01 hinge 0.000e+00*2.00 | hardBER tr 3.204e-04 base 5.468e-04
+  MED 7.941e-01*1.0e-02 | total 2.255e+00
+[TRAIN] step  4000 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.001
+  LOW  EbN0  3: tr 4.649e-01 base 4.632e-01 hinge 3.811e-03*15.00 | hardBER tr 1.420e-01 base 1.418e-01
+  HIGH EbN0 24: tr 2.435e-02 base 5.938e-02 hinge 0.000e+00*2.00 | hardBER tr 8.265e-04 base 1.256e-03
+  MED 7.936e-01*1.0e-02 | total 7.735e-01
+[TRAIN] step  4050 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  8: tr 2.160e-01 base 2.250e-01 hinge 2.604e-03*15.00 | hardBER tr 5.975e-02 base 6.083e-02
+  HIGH EbN0 22: tr 1.112e-02 base 3.290e-02 hinge 0.000e+00*2.00 | hardBER tr 7.121e-04 base 1.249e-03
+  MED 7.936e-01*1.0e-02 | total 3.743e-01
+[TRAIN] step  4100 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.003
+  LOW  EbN0  2: tr 5.366e-01 base 5.356e-01 hinge 3.728e-03*15.00 | hardBER tr 1.662e-01 base 1.663e-01
+  HIGH EbN0 28: tr 7.311e-02 base 1.277e-01 hinge 0.000e+00*2.00 | hardBER tr 6.002e-04 base 8.876e-04
+  MED 7.937e-01*1.0e-02 | total 1.332e+00
+[TRAIN] step  4150 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 14: tr 4.764e-02 base 6.520e-02 hinge 1.801e-03*15.00 | hardBER tr 9.155e-03 base 1.041e-02
+  HIGH EbN0 32: tr 6.571e-02 base 2.449e-01 hinge 0.000e+00*2.00 | hardBER tr 3.382e-04 base 7.579e-04
+  MED 7.940e-01*1.0e-02 | total 7.397e-01
+[TRAIN] step  4200 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.005
+  LOW  EbN0 10: tr 1.388e-01 base 1.472e-01 hinge 2.663e-03*15.00 | hardBER tr 3.413e-02 base 3.561e-02
+  HIGH EbN0 22: tr 3.178e-02 base 3.941e-02 hinge 1.532e-04*2.00 | hardBER tr 8.138e-04 base 1.144e-03
+  MED 7.932e-01*1.0e-02 | total 5.076e-01
+[TRAIN] step  4250 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 13: tr 5.963e-02 base 6.962e-02 hinge 2.500e-03*15.00 | hardBER tr 1.243e-02 base 1.368e-02
+  HIGH EbN0 35: tr 1.611e-01 base 4.296e-01 hinge 0.000e+00*2.00 | hardBER tr 2.975e-04 base 6.231e-04
+  MED 7.940e-01*1.0e-02 | total 1.716e+00
+[TRAIN] step  4300 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.996
+  LOW  EbN0  5: tr 3.582e-01 base 3.572e-01 hinge 3.727e-03*15.00 | hardBER tr 1.053e-01 base 1.054e-01
+  HIGH EbN0 24: tr 2.452e-02 base 5.093e-02 hinge 0.000e+00*2.00 | hardBER tr 6.892e-04 base 1.099e-03
+  MED 7.944e-01*1.0e-02 | total 6.672e-01
+[TRAIN] step  4350 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 15: tr 3.706e-02 base 4.884e-02 hinge 2.325e-03*15.00 | hardBER tr 6.121e-03 base 7.177e-03
+  HIGH EbN0 26: tr 3.442e-02 base 6.267e-02 hinge 0.000e+00*2.00 | hardBER tr 4.883e-04 base 7.579e-04
+  MED 7.939e-01*1.0e-02 | total 4.241e-01
+[TRAIN] step  4400 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.000
+  LOW  EbN0  8: tr 2.051e-01 base 2.120e-01 hinge 2.821e-03*15.00 | hardBER tr 5.457e-02 base 5.562e-02
+  HIGH EbN0 22: tr 1.841e-02 base 3.020e-02 hinge 6.750e-05*2.00 | hardBER tr 8.901e-04 base 1.353e-03
+  MED 7.939e-01*1.0e-02 | total 4.408e-01
+[TRAIN] step  4450 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  8: tr 2.125e-01 base 2.226e-01 hinge 2.492e-03*15.00 | hardBER tr 5.738e-02 base 5.920e-02
+  HIGH EbN0 29: tr 6.306e-02 base 1.336e-01 hinge 0.000e+00*2.00 | hardBER tr 4.120e-04 base 6.968e-04
+  MED 7.931e-01*1.0e-02 | total 8.884e-01
+[TRAIN] step  4500 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.005
+  LOW  EbN0 17: tr 2.510e-02 base 3.387e-02 hinge 1.260e-04*2.00 | hardBER tr 3.583e-03 base 4.247e-03
+  HIGH EbN0 34: tr 1.249e-01 base 3.010e-01 hinge 0.000e+00*2.00 | hardBER tr 3.484e-04 base 5.722e-04
+  MED 7.935e-01*1.0e-02 | total 1.282e+00
+[TRAIN] step  4550 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  3: tr 4.732e-01 base 4.728e-01 hinge 3.655e-03*15.00 | hardBER tr 1.447e-01 base 1.453e-01
+  HIGH EbN0 29: tr 4.295e-02 base 2.210e-01 hinge 0.000e+00*2.00 | hardBER tr 4.145e-04 base 9.308e-04
+  MED 7.938e-01*1.0e-02 | total 9.655e-01
+[TRAIN] step  4600 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.002
+  LOW  EbN0 15: tr 3.705e-02 base 5.339e-02 hinge 1.906e-03*15.00 | hardBER tr 6.243e-03 base 7.108e-03
+  HIGH EbN0 25: tr 2.160e-02 base 4.760e-02 hinge 0.000e+00*2.00 | hardBER tr 5.290e-04 base 1.066e-03
+  MED 7.941e-01*1.0e-02 | total 2.896e-01
+[TRAIN] step  4650 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 12: tr 8.088e-02 base 9.040e-02 hinge 2.548e-03*15.00 | hardBER tr 1.814e-02 base 1.960e-02
+  HIGH EbN0 28: tr 3.436e-02 base 9.225e-02 hinge 0.000e+00*2.00 | hardBER tr 2.340e-04 base 4.908e-04
+  MED 7.939e-01*1.0e-02 | total 4.706e-01
+[TRAIN] step  4700 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.995
+  LOW  EbN0  6: tr 3.159e-01 base 3.169e-01 hinge 3.487e-03*15.00 | hardBER tr 9.024e-02 base 8.998e-02
+  HIGH EbN0 24: tr 1.570e-02 base 5.036e-02 hinge 0.000e+00*2.00 | hardBER tr 5.137e-04 base 7.019e-04
+  MED 7.943e-01*1.0e-02 | total 5.332e-01
+[TRAIN] step  4750 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0  8: tr 2.216e-01 base 2.258e-01 hinge 3.113e-03*15.00 | hardBER tr 6.010e-02 base 6.156e-02
+  HIGH EbN0 35: tr 1.330e-01 base 2.746e-01 hinge 0.000e+00*2.00 | hardBER tr 2.594e-04 base 5.341e-04
+  MED 7.938e-01*1.0e-02 | total 1.606e+00
+[TRAIN] step  4800 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 1.000
+  LOW  EbN0 14: tr 4.671e-02 base 5.709e-02 hinge 2.462e-03*15.00 | hardBER tr 8.581e-03 base 9.819e-03
+  HIGH EbN0 33: tr 1.025e-01 base 3.420e-01 hinge 0.000e+00*2.00 | hardBER tr 2.874e-04 base 5.900e-04
+  MED 7.941e-01*1.0e-02 | total 1.116e+00
+[TRAIN] step  4850 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 12: tr 8.684e-02 base 9.854e-02 hinge 2.333e-03*15.00 | hardBER tr 2.003e-02 base 2.142e-02
+  HIGH EbN0 29: tr 3.819e-02 base 1.004e-01 hinge 0.000e+00*2.00 | hardBER tr 3.433e-04 base 6.104e-04
+  MED 7.938e-01*1.0e-02 | total 5.117e-01
+[TRAIN] step  4900 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC 0.993
+  LOW  EbN0 12: tr 8.577e-02 base 9.466e-02 hinge 2.612e-03*15.00 | hardBER tr 1.905e-02 base 2.023e-02
+  HIGH EbN0 33: tr 1.076e-01 base 2.385e-01 hinge 0.000e+00*2.00 | hardBER tr 3.255e-04 base 6.765e-04
+  MED 7.947e-01*1.0e-02 | total 1.209e+00
+[TRAIN] step  4950 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 2.5e-04 | EsMC nan
+  LOW  EbN0 19: tr 1.615e-02 base 2.814e-02 hinge 6.416e-05*2.00 | hardBER tr 1.503e-03 base 2.080e-03
+  HIGH EbN0 34: tr 1.193e-01 base 2.763e-01 hinge 0.000e+00*2.00 | hardBER tr 3.052e-04 base 6.078e-04
+  MED 7.942e-01*1.0e-02 | total 1.217e+00
+[TRAIN] step  5000 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 1.003
+  LOW  EbN0 12: tr 7.892e-02 base 8.921e-02 hinge 2.471e-03*15.00 | hardBER tr 1.718e-02 base 1.845e-02
+  HIGH EbN0 28: tr 5.447e-02 base 1.136e-01 hinge 0.000e+00*2.00 | hardBER tr 4.323e-04 base 7.095e-04
+  MED 7.936e-01*1.0e-02 | total 6.687e-01
+[TRAIN] step  5050 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0  0: tr 6.090e-01 base 6.068e-01 hinge 3.869e-03*15.00 | hardBER tr 1.931e-01 base 1.928e-01
+  HIGH EbN0 23: tr 1.671e-02 base 4.191e-02 hinge 0.000e+00*2.00 | hardBER tr 7.324e-04 base 1.325e-03
+  MED 7.940e-01*1.0e-02 | total 8.421e-01
+[TRAIN] step  5100 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 0.998
+  LOW  EbN0  9: tr 1.621e-01 base 1.706e-01 hinge 2.650e-03*15.00 | hardBER tr 4.198e-02 base 4.313e-02
+  HIGH EbN0 34: tr 9.031e-02 base 1.742e-01 hinge 0.000e+00*2.00 | hardBER tr 2.365e-04 base 4.349e-04
+  MED 7.941e-01*1.0e-02 | total 1.113e+00
+[TRAIN] step  5150 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0 15: tr 3.472e-02 base 4.897e-02 hinge 2.093e-03*15.00 | hardBER tr 5.725e-03 base 6.999e-03
+  HIGH EbN0 26: tr 1.752e-02 base 3.373e-02 hinge 1.437e-05*2.00 | hardBER tr 3.560e-04 base 5.925e-04
+  MED 7.938e-01*1.0e-02 | total 2.496e-01
+[TRAIN] step  5200 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 0.990
+  LOW  EbN0 14: tr 4.807e-02 base 5.284e-02 hinge 3.050e-03*15.00 | hardBER tr 9.349e-03 base 9.913e-03
+  HIGH EbN0 31: tr 1.154e-01 base 1.025e-01 hinge 7.812e-04*2.00 | hardBER tr 2.925e-04 base 4.578e-04
+  MED 7.953e-01*1.0e-02 | total 1.272e+00
+[TRAIN] step  5250 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0 15: tr 3.275e-02 base 4.632e-02 hinge 2.155e-03*15.00 | hardBER tr 5.702e-03 base 7.200e-03
+  HIGH EbN0 35: tr 2.272e-01 base 3.583e-01 hinge 0.000e+00*2.00 | hardBER tr 3.840e-04 base 6.587e-04
+  MED 7.934e-01*1.0e-02 | total 2.345e+00
+[TRAIN] step  5300 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 0.995
+  LOW  EbN0  7: tr 2.579e-01 base 2.586e-01 hinge 3.521e-03*15.00 | hardBER tr 7.160e-02 base 7.161e-02
+  HIGH EbN0 26: tr 3.232e-02 base 5.328e-02 hinge 0.000e+00*2.00 | hardBER tr 5.137e-04 base 9.130e-04
+  MED 7.947e-01*1.0e-02 | total 6.419e-01
+[TRAIN] step  5350 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0 21: tr 1.304e-02 base 3.312e-02 hinge 0.000e+00*2.00 | hardBER tr 9.664e-04 base 1.597e-03
+  HIGH EbN0 26: tr 1.646e-02 base 6.021e-02 hinge 0.000e+00*2.00 | hardBER tr 2.518e-04 base 5.493e-04
+  MED 7.946e-01*1.0e-02 | total 1.856e-01
+[TRAIN] step  5400 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 1.004
+  LOW  EbN0  9: tr 1.654e-01 base 1.755e-01 hinge 2.494e-03*15.00 | hardBER tr 4.327e-02 base 4.467e-02
+  HIGH EbN0 33: tr 1.061e-01 base 2.082e-01 hinge 0.000e+00*2.00 | hardBER tr 3.204e-04 base 6.002e-04
+  MED 7.936e-01*1.0e-02 | total 1.272e+00
+[TRAIN] step  5450 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0  9: tr 1.705e-01 base 1.776e-01 hinge 2.801e-03*15.00 | hardBER tr 4.522e-02 base 4.565e-02
+  HIGH EbN0 32: tr 6.408e-02 base 1.631e-01 hinge 0.000e+00*2.00 | hardBER tr 2.569e-04 base 4.705e-04
+  MED 7.947e-01*1.0e-02 | total 8.613e-01
+[TRAIN] step  5500 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 0.998
+  LOW  EbN0  2: tr 5.375e-01 base 5.353e-01 hinge 3.865e-03*15.00 | hardBER tr 1.671e-01 base 1.661e-01
+  HIGH EbN0 30: tr 5.430e-02 base 8.739e-02 hinge 0.000e+00*2.00 | hardBER tr 3.306e-04 base 5.569e-04
+  MED 7.941e-01*1.0e-02 | total 1.146e+00
+[TRAIN] step  5550 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0 17: tr 2.335e-02 base 3.316e-02 hinge 1.038e-04*2.00 | hardBER tr 2.902e-03 base 3.415e-03
+  HIGH EbN0 32: tr 8.654e-02 base 1.758e-01 hinge 0.000e+00*2.00 | hardBER tr 4.222e-04 base 7.019e-04
+  MED 7.944e-01*1.0e-02 | total 8.969e-01
+[TRAIN] step  5600 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 1.003
+  LOW  EbN0 10: tr 1.189e-01 base 1.306e-01 hinge 2.335e-03*15.00 | hardBER tr 2.900e-02 base 3.103e-02
+  HIGH EbN0 22: tr 2.200e-02 base 3.330e-02 hinge 7.568e-05*2.00 | hardBER tr 9.537e-04 base 1.480e-03
+  MED 7.942e-01*1.0e-02 | total 3.835e-01
+[TRAIN] step  5650 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0 15: tr 3.840e-02 base 5.561e-02 hinge 1.831e-03*15.00 | hardBER tr 7.301e-03 base 8.446e-03
+  HIGH EbN0 28: tr 1.000e-01 base 1.232e-01 hinge 0.000e+00*2.00 | hardBER tr 3.382e-04 base 6.129e-04
+  MED 7.941e-01*1.0e-02 | total 1.074e+00
+[TRAIN] step  5700 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 0.997
+  LOW  EbN0 21: tr 2.070e-02 base 4.097e-02 hinge 0.000e+00*2.00 | hardBER tr 1.305e-03 base 1.849e-03
+  HIGH EbN0 22: tr 1.360e-02 base 3.387e-02 hinge 0.000e+00*2.00 | hardBER tr 7.680e-04 base 1.124e-03
+  MED 7.945e-01*1.0e-02 | total 1.647e-01
+[TRAIN] step  5750 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0  2: tr 5.223e-01 base 5.190e-01 hinge 4.008e-03*15.00 | hardBER tr 1.618e-01 base 1.608e-01
+  HIGH EbN0 23: tr 1.555e-02 base 4.704e-02 hinge 0.000e+00*2.00 | hardBER tr 6.663e-04 base 1.132e-03
+  MED 7.945e-01*1.0e-02 | total 7.459e-01
+[TRAIN] step  5800 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 1.001
+  LOW  EbN0 16: tr 3.428e-02 base 3.874e-02 hinge 2.415e-04*2.00 | hardBER tr 5.071e-03 base 5.809e-03
+  HIGH EbN0 25: tr 1.521e-02 base 3.646e-02 hinge 0.000e+00*2.00 | hardBER tr 3.789e-04 base 7.782e-04
+  MED 7.941e-01*1.0e-02 | total 1.948e-01
+[TRAIN] step  5850 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0  8: tr 2.140e-01 base 2.168e-01 hinge 3.273e-03*15.00 | hardBER tr 5.708e-02 base 5.773e-02
+  HIGH EbN0 24: tr 1.643e-02 base 4.996e-02 hinge 0.000e+00*2.00 | hardBER tr 5.442e-04 base 8.494e-04
+  MED 7.939e-01*1.0e-02 | total 4.353e-01
+[TRAIN] step  5900 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC 1.002
+  LOW  EbN0  5: tr 3.559e-01 base 3.567e-01 hinge 3.505e-03*15.00 | hardBER tr 1.041e-01 base 1.044e-01
+  HIGH EbN0 31: tr 1.089e-01 base 1.763e-01 hinge 0.000e+00*2.00 | hardBER tr 4.501e-04 base 8.113e-04
+  MED 7.944e-01*1.0e-02 | total 1.505e+00
+[TRAIN] step  5950 | eps 0.04 | PN_sigma 1.00e-03 | Q_SUB 256 | B 128 | lr 1.3e-04 | EsMC nan
+  LOW  EbN0  6: tr 2.992e-01 base 2.991e-01 hinge 3.608e-03*15.00 | hardBER tr 8.674e-02 base 8.651e-02
+  HIGH EbN0 31: tr 9.624e-02 base 2.188e-01 hinge 0.000e+00*2.00 | hardBER tr 3.382e-04 base 5.341e-04
+  MED 7.945e-01*1.0e-02 | total 1.324e+00
+[INFO] Saved codebook_e2e.pt/.npy and cb1_kmv.pt/.npy.
+[INFO] Training finished.
+[INFO] control training complete in 2211.9 s
+[RUN] finished=2026-08-12T16:44:56.787836+08:00

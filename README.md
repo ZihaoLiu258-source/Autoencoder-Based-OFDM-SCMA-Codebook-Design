@@ -14,9 +14,9 @@ End-to-end learned SCMA codebook for an OFDM downlink, optimized with a differen
 |---|---|
 | Understand the method and assumptions | [Idea](#idea) and [What this model honestly does (and doesn't)](#what-this-model-honestly-does-and-doesnt) |
 | Install and run the released model | [Quick start](#quick-start) |
-| Reproduce training, controls, and BER sweeps | [REPRODUCIBILITY.md](REPRODUCIBILITY.md) |
-| Verify downloaded artifacts | `python validate_phase1_artifacts.py` |
-| Check repository integrity without dependencies | `python check_repository.py` |
+| Reproduce training, controls, and BER sweeps | [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) |
+| Verify downloaded artifacts | `python -m tools.validate_phase1_artifacts` |
+| Check repository integrity without dependencies | `python -m tools.check_repository` |
 | Cite the work | [Citation](#citation) or [CITATION.cff](CITATION.cff) |
 
 The repository separates the paper's fixed-point model from all additional controls. Ablation scripts and checkpoints use dedicated `artifacts/` subdirectories and never overwrite the released seed-0 checkpoint.
@@ -79,13 +79,13 @@ Each step samples a low/mid-SNR batch and a high-SNR batch. The first uses `[0, 
 
 ```bash
 python -m pip install -r requirements.txt
-python check_repository.py
+python -m tools.check_repository
 python train_ofdm_scma.py
 ```
 
-Python 3.10 or newer is recommended. A CUDA-capable GPU is strongly recommended for full training and Monte-Carlo sweeps; repository and released-artifact validation can run on CPU. Exact validated package versions, computational levels, expected files, and full commands are documented in [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
+Python 3.10 or newer is recommended. A CUDA-capable GPU is strongly recommended for full training and Monte-Carlo sweeps; repository and released-artifact validation can run on CPU. Exact validated package versions, computational levels, expected files, and full commands are documented in [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
 
-Outputs (saved to the working directory):
+Outputs are saved under `artifacts/main/checkpoints/`:
 
 - `codebook_e2e.pt` — shape `(V, K, M)`, complex64, end-to-end format
 - `cb1_kmv.pt`     — shape `(K, M, V)`, complex64, simulator format
@@ -101,16 +101,16 @@ The M1 scripts and outputs are deliberately separated from the original training
 
 ```bash
 # Trains the additional model; never overwrites cb1_kmv.pt.
-python train_ofdm_scma_randomized.py
+python -m experiments.phase1.train_ofdm_scma_randomized
 
 # Paired three-point comparison at Eb/N0 = 30 dB.
-python eval_randomized_training_ablation.py
+python -m experiments.phase1.eval_randomized_training_ablation
 
 # Exact-energy and constellation-geometry comparison.
-python analyze_randomized_training_ablation.py
+python -m experiments.phase1.analyze_randomized_training_ablation
 ```
 
-All additional checkpoints, histories, raw-count `.mat`/`.csv` files, logs, and geometry summaries are written below `artifacts/m1_randomized_training/`. The randomized model inherits the fixed model's initialization, 6000 steps, SNR sampler, batch size, Log-MPA iterations, optimizer, loss, and energy projection; only the CFO/PN parameter sampling differs.
+All additional checkpoints, histories, raw-count `.mat`/`.csv` files, logs, and geometry summaries are written below `artifacts/phase1/m1_randomized_training/`. The randomized model inherits the fixed model's initialization, 6000 steps, SNR sampler, batch size, Log-MPA iterations, optimizer, loss, and energy projection; only the CFO/PN parameter sampling differs.
 
 ### M3/M4 fixed-point controls
 
@@ -118,16 +118,16 @@ The remaining Phase-1 controls reuse the original fixed-point training entry poi
 
 ```bash
 # M3: change only lambda_MED from 1e-2 to zero.
-python train_fixed_point_control.py --condition no_med --seed 0 --steps 6000 --output-dir artifacts/m3_no_med
-python eval_no_med_ablation.py
+python -m experiments.phase1.train_fixed_point_control --condition no_med --seed 0 --steps 6000 --output-dir artifacts/phase1/m3_no_med
+python -m experiments.phase1.eval_no_med_ablation
 
 # M4: retain the full loss and change only the independent training seed.
-python train_fixed_point_control.py --condition full --seed 1 --steps 6000 --output-dir artifacts/m4_seed_check/seed1
-python train_fixed_point_control.py --condition full --seed 2 --steps 6000 --output-dir artifacts/m4_seed_check/seed2
-python eval_independent_seed_check.py
+python -m experiments.phase1.train_fixed_point_control --condition full --seed 1 --steps 6000 --output-dir artifacts/phase1/m4_seed_check/seed1
+python -m experiments.phase1.train_fixed_point_control --condition full --seed 2 --steps 6000 --output-dir artifacts/phase1/m4_seed_check/seed2
+python -m experiments.phase1.eval_independent_seed_check
 
 # Exact-energy and geometry audit for the original and three control checkpoints.
-python analyze_phase1_controls.py
+python -m experiments.phase1.analyze_phase1_controls
 ```
 
 `train_fixed_point_control.py` resets NumPy/PyTorch/CUDA random states, records the exact condition and constants in `training_metadata.json`, and runs the unchanged original optimizer in the requested artifact directory. The M3/M4 evaluators use one representative training point, exact global-`Es` normalization, raw integer error counts, and paired common random numbers. No new BER curve or receiver is introduced.
@@ -142,9 +142,9 @@ Evaluation is a two-stage pipeline: a Python script runs the Monte-Carlo BER swe
 
 | Python sweep | MATLAB plot | Sweep axis | Other impairment | `.mat` file |
 |---|---|---|---|---|
-| `eval_ber_vs_phasenoise.py` | `plot_ber_vs_phasenoise.m` | PN `σ_step` ∈ [0, 3e-3] | CFO `ε` ∈ {0, 0.04} | `SCMA_CFO_Simulation_Results.mat` |
-| `eval_ber_vs_cfo.py` | `plot_ber_vs_cfo.m` | CFO `ε` ∈ [0, 0.06] | PN `σ_step` ∈ {0, 2.4e-3} | `SCMA_SweepCFO_Simulation_Results.mat` |
-| `eval_ber_vs_ebn0.py` | `plot_ber_vs_ebn0.m` | `E_b/N_0` ∈ [10, 34] dB | two conditions: ideal `(ε=0, σ=0)` and impaired `(ε=0.03, σ=1e-4)` | `SCMA_EbN0_Simulation_Results.mat` |
+| `eval_ber_vs_phasenoise.py` | `plots/matlab/plot_ber_vs_phasenoise.m` | PN `σ_step` ∈ [0, 3e-3] | CFO `ε` ∈ {0, 0.04} | `artifacts/main/sweeps/SCMA_CFO_Simulation_Results.mat` |
+| `eval_ber_vs_cfo.py` | `plots/matlab/plot_ber_vs_cfo.m` | CFO `ε` ∈ [0, 0.06] | PN `σ_step` ∈ {0, 2.4e-3} | `artifacts/main/sweeps/SCMA_SweepCFO_Simulation_Results.mat` |
+| `eval_ber_vs_ebn0.py` | `plots/matlab/plot_ber_vs_ebn0.m` | `E_b/N_0` ∈ [10, 34] dB | two conditions: ideal `(ε=0, σ=0)` and impaired `(ε=0.03, σ=1e-4)` | `artifacts/main/sweeps/SCMA_EbN0_Simulation_Results.mat` |
 
 In every plot, the **solid** curve is the impaired condition and the **dashed** curve (same color, not in the legend) is the impairment-free reference, so the gap between the two shows each codebook's robustness directly.
 
@@ -162,11 +162,11 @@ R  = J log2(M) / K = 3 bits/resource element,
 N0 = 1 / (R · 10^(Eb/N0_dB/10)).
 ```
 
-The expectation includes cross terms caused by nonzero per-user codebook means. It is evaluated analytically for independent equiprobable messages, rather than estimated with a finite Monte-Carlo batch. Time-domain AWGN uses variance `N0/Nfft`, which becomes variance `N0` per subcarrier after the unnormalized FFT. We preserve each baseline's original user-power allocation and equalize only total downlink superposition energy. Run `python analyze_codebook_energy.py` to reproduce the complete per-user and peak-codeword energy table in `codebook_energy_summary.csv`.
+The expectation includes cross terms caused by nonzero per-user codebook means. It is evaluated analytically for independent equiprobable messages, rather than estimated with a finite Monte-Carlo batch. Time-domain AWGN uses variance `N0/Nfft`, which becomes variance `N0` per subcarrier after the unnormalized FFT. We preserve each baseline's original user-power allocation and equalize only total downlink superposition energy. Run `python -m experiments.diagnostics.analyze_codebook_energy` to reproduce the complete per-user and peak-codeword energy table under `artifacts/main/diagnostics/`.
 
-The intentionally mismatched Log-MPA uses `N0_dec = N0` while the physical simulator still applies time-domain CFO and Wiener PN. The lightweight check `python eval_decoder_variance_sensitivity.py` repeats one representative point with `N0_dec = gamma*N0`, `gamma in {0.5, 1, 2}`, for the proposed and strongest PN-resilient baseline; it writes a raw-count `.mat`, `.csv`, and `.log`.
+The intentionally mismatched Log-MPA uses `N0_dec = N0` while the physical simulator still applies time-domain CFO and Wiener PN. The lightweight check `python -m experiments.diagnostics.eval_decoder_variance_sensitivity` repeats one representative point with `N0_dec = gamma*N0`, `gamma in {0.5, 1, 2}`, for the proposed and strongest PN-resilient baseline; it writes a raw-count `.mat`, `.csv`, and `.log` under `artifacts/main/diagnostics/`.
 
-Every evaluation also mirrors stdout and stderr to a complete log in the working directory: `eval_ber_vs_phasenoise.log`, `eval_ber_vs_cfo.log`, or `eval_ber_vs_ebn0.log`. The log records timestamps, script path, stopping reason, `Nd`, error count, total bits, empirical BER, and any zero-error upper bound for every simulated point.
+Every evaluation also mirrors stdout and stderr to a complete log under `artifacts/main/sweeps/`. The log records timestamps, script path, stopping reason, `Nd`, error count, total bits, empirical BER, and any zero-error upper bound for every simulated point.
 
 ```bash
 # 1) Run the sweeps (Python) -> writes the .mat files
@@ -175,14 +175,14 @@ python eval_ber_vs_cfo.py
 python eval_ber_vs_ebn0.py
 
 # Reproduce assumption/fairness checks used in the response letter
-python analyze_codebook_energy.py
-python eval_decoder_variance_sensitivity.py
+python -m experiments.diagnostics.analyze_codebook_energy
+python -m experiments.diagnostics.eval_decoder_variance_sensitivity
 
 # 2) Render the figures (MATLAB) -> writes BER_vs_*.pdf / .eps
-#    run plot_ber_vs_phasenoise.m, plot_ber_vs_cfo.m, plot_ber_vs_ebn0.m
+#    run the matching scripts under plots/matlab/
 ```
 
-> **Codebook path:** all three Python scripts require the released `cb1_kmv.pt` checkpoint (also written by `train_ofdm_scma.py`). If the file is missing or has the wrong shape, evaluation stops with an explicit error; it never substitutes a random codebook.
+> **Codebook path:** all three Python scripts require `artifacts/main/checkpoints/cb1_kmv.pt` (also written by `train_ofdm_scma.py`). If the file is missing or has the wrong shape, evaluation stops with an explicit error; it never substitutes a random codebook.
 
 ## Hardware
 
@@ -192,35 +192,26 @@ Developed on i5-13600KF + RTX 4070 (12 GB). At `BATCH_OFDMSYM = 128`, `Q_SUB = 2
 
 ```
 .
-├── train_ofdm_scma.py            # main training script
-├── train_ofdm_scma_randomized.py # isolated M1 randomized-training script
-├── train_fixed_point_control.py   # isolated M3/M4 fixed-point control wrapper
-├── eval_ber_vs_phasenoise.py     # BER vs PN sigma sweep  -> .mat
-├── eval_ber_vs_cfo.py            # BER vs CFO sweep        -> .mat
-├── eval_ber_vs_ebn0.py           # BER vs Eb/N0 sweep      -> .mat
-├── analyze_codebook_energy.py     # exact Es/user/peak energy audit -> .csv
-├── eval_decoder_variance_sensitivity.py # one-point N0_dec audit -> .mat/.csv/.log
-├── eval_randomized_training_ablation.py # M1 fixed/randomized three-point audit
-├── analyze_randomized_training_ablation.py # M1 energy/geometry audit
-├── eval_no_med_ablation.py        # M3 one-point paired Soft-MED ablation
-├── eval_independent_seed_check.py # M4 three-training-seed one-point check
-├── phase1_control_utils.py        # shared paired Monte-Carlo helpers
-├── analyze_phase1_controls.py     # M3/M4 exact-energy and geometry audit
-├── validate_phase1_artifacts.py   # fail-fast checkpoint/MAT/log integrity audit
-├── check_repository.py            # dependency-free repository integrity audit
-├── evaluation_utils.py            # exact normalization and BER/log helpers
-├── plot_ber_vs_phasenoise.m      # MATLAB: render PN sweep figure
-├── plot_ber_vs_cfo.m             # MATLAB: render CFO sweep figure
-├── plot_ber_vs_ebn0.m            # MATLAB: render Eb/N0 figure
-├── codebook_e2e.pt / .npy        # trained codebook, (V, K, M)
-├── cb1_kmv.pt / .npy             # same codebook in (K, M, V) layout
-├── artifacts/m1_randomized_training/ # isolated M1 checkpoints and evidence
-├── artifacts/m3_no_med/              # isolated no-MED checkpoint and evidence
-├── artifacts/m4_seed_check/          # independent-seed checkpoints and evidence
-├── artifacts/phase1_summary/         # cross-control feature audit
-├── REPRODUCIBILITY.md                # complete reproduction and validation guide
-├── CONTRIBUTING.md                   # contribution and artifact standards
-├── CITATION.cff                      # GitHub-readable citation metadata
+├── train_ofdm_scma.py            # main fixed-point training entry point
+├── eval_ber_vs_phasenoise.py     # main PN sweep
+├── eval_ber_vs_cfo.py            # main CFO sweep
+├── eval_ber_vs_ebn0.py           # main Eb/N0 sweep
+├── evaluation_utils.py           # shared normalization, BER, and logging helpers
+├── experiments/
+│   ├── phase1/                   # M1 randomized, M3 Soft-MED, and M4 seed controls
+│   └── diagnostics/              # energy and decoder-variance checks
+├── plots/
+│   └── matlab/                   # publication BER renderers
+├── tools/                        # repository audit, artifact audit, constellation plotter
+├── artifacts/
+│   ├── main/
+│   │   ├── checkpoints/          # released seed-0 codebooks
+│   │   ├── sweeps/               # main MAT files and complete logs
+│   │   ├── diagnostics/          # lightweight control outputs
+│   │   └── figures/              # publication-ready PDF/EPS figures
+│   └── phase1/                   # isolated M1/M3/M4 evidence and summary
+├── docs/                         # reproducibility and contribution guides
+├── CITATION.cff                  # GitHub-readable citation metadata
 ├── requirements.txt
 ├── LICENSE
 └── README.md

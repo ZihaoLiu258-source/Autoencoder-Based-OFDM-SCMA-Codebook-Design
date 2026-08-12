@@ -5,6 +5,7 @@
 # ============================================================
 
 import os
+from pathlib import Path
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -20,6 +21,10 @@ from evaluation_utils import (
     normalize_codebook_exact_global_es,
     run_with_log,
 )
+
+REPO_ROOT = Path(__file__).resolve().parent
+CHECKPOINT_PATH = REPO_ROOT / "artifacts/main/checkpoints/cb1_kmv.pt"
+SWEEP_DIR = REPO_ROOT / "artifacts/main/sweeps"
 
 torch.set_num_threads(1)
 # =========================
@@ -94,7 +99,7 @@ FG_THR = 1e-12
 # ============================================================
 # 1) Codebooks
 # ============================================================
-def load_trained_cb1_kmv(path="cb1_kmv.pt", device=DEVICE):
+def load_trained_cb1_kmv(path=CHECKPOINT_PATH, device=DEVICE):
     if not os.path.exists(path):
         raise FileNotFoundError(
             f"Required trained codebook '{path}' was not found. "
@@ -601,7 +606,7 @@ def run():
         USE_TIME_DOMAIN_CFO = False
 
     # Load or build candidate codebooks.
-    CB1 = load_trained_cb1_kmv("cb1_kmv.pt", device=device)
+    CB1 = load_trained_cb1_kmv(CHECKPOINT_PATH, device=device)
     CB2 = build_cb2_matlab_fullq(device=device)
     CB3 = build_cb_xudong_li(device=device)
     CB4 = build_cb_shutian_zhang(device=device)
@@ -765,10 +770,12 @@ def run():
         'zero_error_bound_definition': '95% rule of three: 3 / total_bits',
         'labels': labels,
     }
-    mat_filename = "SCMA_EbN0_Simulation_Results.mat"
+    SWEEP_DIR.mkdir(parents=True, exist_ok=True)
+    mat_filename = SWEEP_DIR / "SCMA_EbN0_Simulation_Results.mat"
     sio.savemat(mat_filename, mat_data)
     print(f"[INFO] Saved {mat_filename}")
 
 
 if __name__ == "__main__":
-    run_with_log(run, "eval_ber_vs_ebn0.log")
+    SWEEP_DIR.mkdir(parents=True, exist_ok=True)
+    run_with_log(run, str(SWEEP_DIR / "eval_ber_vs_ebn0.log"))

@@ -1,0 +1,23 @@
+[RUN] started=2026-08-12T15:09:31.772685+08:00
+[RUN] command_script=experiments/phase1/eval_randomized_training_ablation.py
+[RUN] log_file=artifacts/phase1/m1_randomized_training/m1_three_point_results.log
+[INFO] device=cuda; Eb/N0=30 dB; Nd/point=20000
+[INFO] Paired common-random-number evaluation for the two checkpoints.
+[INFO] point=mild eps=0.020 sigma=5.0e-04: Nd=5000/20000
+[INFO] point=mild eps=0.020 sigma=5.0e-04: Nd=10000/20000
+[INFO] point=mild eps=0.020 sigma=5.0e-04: Nd=15000/20000
+[INFO] point=mild eps=0.020 sigma=5.0e-04: Nd=20000/20000
+[INFO] point=fixed_training_point eps=0.040 sigma=1.0e-03: Nd=5000/20000
+[INFO] point=fixed_training_point eps=0.040 sigma=1.0e-03: Nd=10000/20000
+[INFO] point=fixed_training_point eps=0.040 sigma=1.0e-03: Nd=15000/20000
+[INFO] point=fixed_training_point eps=0.040 sigma=1.0e-03: Nd=20000/20000
+[INFO] point=heavy eps=0.060 sigma=3.0e-03: Nd=5000/20000
+[INFO] point=heavy eps=0.060 sigma=3.0e-03: Nd=10000/20000
+[INFO] point=heavy eps=0.060 sigma=3.0e-03: Nd=15000/20000
+[INFO] point=heavy eps=0.060 sigma=3.0e-03: Nd=20000/20000
+[RESULT] mild | eps=0.020 | sigma=5.0e-04 | Fixed-point training: errors=203, bits=61440000, BER=3.304036e-06 | Randomized training: errors=226, bits=61440000, BER=3.678385e-06 | discordant fixed-wrong/randomized-correct=36, fixed-correct/randomized-wrong=59, clustered BER difference=3.743e-07 (95% CI [-2.025e-07, 9.512e-07]), paired-OFDM p=2.034e-01
+[RESULT] fixed_training_point | eps=0.040 | sigma=1.0e-03 | Fixed-point training: errors=20817, bits=61440000, BER=3.388184e-04 | Randomized training: errors=23853, bits=61440000, BER=3.882324e-04 | discordant fixed-wrong/randomized-correct=6119, fixed-correct/randomized-wrong=9155, clustered BER difference=4.941e-05 (95% CI [4.208e-05, 5.674e-05]), paired-OFDM p=1.086e-39
+[RESULT] heavy | eps=0.060 | sigma=3.0e-03 | Fixed-point training: errors=1231976, bits=61440000, BER=2.005169e-02 | Randomized training: errors=1239978, bits=61440000, BER=2.018193e-02 | discordant fixed-wrong/randomized-correct=298160, fixed-correct/randomized-wrong=306162, clustered BER difference=1.302e-04 (95% CI [8.858e-05, 1.719e-04]), paired-OFDM p=9.118e-10
+[INFO] Saved artifacts/phase1/m1_randomized_training/m1_three_point_results.mat
+[INFO] Saved artifacts/phase1/m1_randomized_training/m1_three_point_results.csv
+[RUN] finished=2026-08-12T15:10:41.310664+08:00

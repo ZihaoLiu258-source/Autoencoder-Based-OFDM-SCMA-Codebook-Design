@@ -1,0 +1,54 @@
+{
+  "experiment": "Phase-1 isolated fixed-point training control",
+  "condition": "full",
+  "status": "complete",
+  "seed": 2,
+  "steps": 6000,
+  "optimizer_updates": 6000,
+  "step_index_range": [
+    0,
+    5999
+  ],
+  "device": "cuda",
+  "fixed_impairments": {
+    "cfo_epsilon": 0.04,
+    "pn_sigma_step_rad": 0.001
+  },
+  "soft_med": {
+    "enabled": true,
+    "lambda": 0.01,
+    "tau": 0.15
+  },
+  "controlled_settings": {
+    "initialization_and_hinge_reference": "built-in Zhang codebook",
+    "batch_ofdm_symbols": 128,
+    "q_sub": 256,
+    "mpa_iterations_low": 10,
+    "mpa_iterations_high": 10,
+    "learning_rate": 0.0005,
+    "lr_scheduler_step": 2500,
+    "lr_scheduler_gamma": 0.5,
+    "high_snr_weight": 10.0,
+    "bce_weight": 0.3,
+    "margin_weight": 0.8,
+    "global_es_target": 1.0,
+    "project_every": 4,
+    "projection_mc_symbols": 64,
+    "gradient_clip_norm": 3.0
+  },
+  "output_separation": "artifacts/phase1/m4_seed_check/seed2",
+  "elapsed_seconds": 2214.9532631,
+  "peak_cuda_memory_bytes": 3972843520,
+  "checkpoint_sha256": {
+    "codebook_e2e.pt": "3801d45c47683c91de3450367ab152201d7600fe47f913cc0fa4a3e155a833cf",
+    "cb1_kmv.pt": "f46f8326b3c0f105837f618a4fea38c10272cf29b02441114e98556cbf674f52"
+  },
+  "outputs": [
+    "codebook_e2e.pt",
+    "cb1_kmv.pt",
+    "codebook_e2e.npy",
+    "cb1_kmv.npy",
+    "training.log",
+    "training_metadata.json"
+  ]
+}
