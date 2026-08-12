@@ -19,13 +19,20 @@ labels = {
     'Proposed Codebook', ...
     'DE-Based (Deka et al. [6])', ...
     'Power-Imbalanced (Li et al. [7])', ...
-    'Capacitybased (Zhang et al. [8])', ...
+    'Capacity-Based (Zhang et al. [8])', ...
     'Deep Learning (Zheng et al. [11])', ...
     'PN-Resilient (Liu et al. [10])'
 };
 
-colors  = lines(6);
-markers = {'o', 's', '^', 'd', 'x', '*'};
+colors = [
+    0.00, 0.45, 0.74;
+    0.85, 0.33, 0.10;
+    0.93, 0.69, 0.13;
+    0.49, 0.18, 0.56;
+    0.47, 0.67, 0.19;
+    1.00, 0.00, 0.00
+];
+markers = {'o', 's', '^', 'd', 'x', 'v'};
 
 figure('Position', [100, 100, 600, 480], 'Color', 'w');
 hold on;
@@ -37,13 +44,14 @@ for i = 1:6
     ber_solid = squeeze(BER_plot(2, i, :));
     ub_solid = squeeze(BER_is_upper_bound(2, i, :)) ~= 0;
     semilogy(EbN0_vec, ber_solid, ['-', markers{i}], 'Color', colors(i,:), ...
-        'LineWidth', 1.5, 'MarkerSize', 8, 'MarkerFaceColor', 'none', ...
+        'LineWidth', 2.0, 'MarkerSize', 9, 'MarkerFaceColor', 'none', ...
         'DisplayName', labels{i});
 
     ber_dash = squeeze(BER_plot(1, i, :));
     ub_dash = squeeze(BER_is_upper_bound(1, i, :)) ~= 0;
-    semilogy(EbN0_vec, ber_dash, '--', 'Color', colors(i,:), ...
-        'LineWidth', 1.0, 'HandleVisibility', 'off');
+    semilogy(EbN0_vec, ber_dash, '--', 'Color', [0.55, 0.55, 0.55], ...
+        'LineWidth', 1.2, 'Marker', markers{i}, 'MarkerIndices', 1:2:numel(EbN0_vec), ...
+        'MarkerSize', 5, 'MarkerFaceColor', 'none', 'HandleVisibility', 'off');
 
     % Downward triangles identify zero-error points plotted at the 95% upper bound.
     if any(ub_solid)
@@ -63,14 +71,13 @@ grid on;
 set(gca, 'XMinorGrid', 'on', 'YMinorGrid', 'on', 'MinorGridLineStyle', ':');
 set(gca, 'GridLineStyle', '-', 'GridAlpha', 0.4);
 set(gca, 'TickDir', 'in');
-set(gca, 'FontName', 'Times New Roman', 'FontSize', 12);
-xlabel('E_b/N_0 (dB)');
-ylabel('BER');
+set(gca, 'FontName', 'Times New Roman', 'FontSize', 13);
+xlabel('E_b/N_0 (dB)', 'FontSize', 14);
+ylabel('BER', 'FontSize', 14);
 ylim([1e-7, 1e-2]);
 xlim([min(EbN0_vec), max(EbN0_vec)]);
 
-lgd = legend('Location', 'southwest');
-lgd.ItemTokenSize = [30, 18];
+% Fig. 2(a) carries the shared legend for all three panels.
 box on;
 set(gca, 'LineWidth', 1.0);
 
@@ -85,3 +92,4 @@ catch
     set(gcf, 'PaperSize', [fig_pos(3) fig_pos(4)]);
     print(gcf, '-depsc2', '-r600', '-loose', 'BER_vs_ebn0.eps');
 end
+
