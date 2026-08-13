@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Official reproducibility package for the preprint by Zihao Liu, Zilong Liu, and Leila Musavian: [arXiv:2606.22603](https://arxiv.org/abs/2606.22603). Repository visibility remains under author control during the pre-submission embargo.
+Official reproducibility package for the preprint by Zihao Liu, Zilong Liu, and Leila Musavian: [arXiv:2606.22603](https://arxiv.org/abs/2606.22603). 
 
 End-to-end learned SCMA codebook for an OFDM downlink, optimized with a differentiable Log-MPA detector under multipath fading, carrier frequency offset (CFO), and Wiener phase noise (PN).
 
